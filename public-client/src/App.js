@@ -5,15 +5,22 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <nav class="bp3-navbar bp3-dark">
+        <div style="margin: 0 auto; width: 480px;"> <!-- ADD ME -->
+          <div class="bp3-navbar-group bp3-align-left">
+            <div class="bp3-navbar-heading">Blueprint</div>
+            <input class="bp3-input" placeholder="Search files..." type="text" />
+          </div>
+          <div class="bp3-navbar-group bp3-align-right">
+            <button class="bp3-button bp3-minimal bp3-icon-home">Home</button>
+            <button class="bp3-button bp3-minimal bp3-icon-document">Files</button>
+            <span class="bp3-navbar-divider"></span>
+            <button class="bp3-button bp3-minimal bp3-icon-user"></button>
+            <button class="bp3-button bp3-minimal bp3-icon-notifications"></button>
+            <button class="bp3-button bp3-minimal bp3-icon-cog"></button>
+          </div>
+        </div>
+      </nav>
     );
   }
 }
