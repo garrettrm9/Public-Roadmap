@@ -27,8 +27,8 @@ app.get("/isLoggedIn", authService.isLoggedIn, (req, res) => {
   });
 });
 
-// const foodRouter = require("./controllers/food");
-// app.use("/food", foodRouter);
+const featureRouter = require("./controllers/features");
+app.use("/features", featureRouter);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/build/index.html"));

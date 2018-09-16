@@ -8,14 +8,14 @@ router.get("/", feature.getAllFeatures, (req, res) => {
 
 router.get("/:user_id", feature.getUserFeatures, (req, res) => {
   const { features } = res.locals;
-  res.json(notifications);
+  res.json(features);
 });
 
-router.post(":user_id/", feature.newFeature, (req, res) => {
+router.post("/:user_id", feature.newFeature, (req, res) => {
   res.json(res.locals);
 });
 
-router.put(":feature_id", feature.editFeature, (req, res) => {
+router.put("/:feature_id", feature.editFeature, (req, res) => {
   const { feature } = res.locals;
   res.json(feature);
 });
