@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
+import {
+  Alignment,
+  Button,
+  Classes,
+  H5,
+  Navbar,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading,
+  Switch,
+} from "@blueprintjs/core";
 import logo from './logo.svg';
+import Home from './Components/screens/home.js'
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <nav class="bp3-navbar bp3-dark">
-        <div style="margin: 0 auto; width: 480px;"> <!-- ADD ME -->
-          <div class="bp3-navbar-group bp3-align-left">
-            <div class="bp3-navbar-heading">Blueprint</div>
-            <input class="bp3-input" placeholder="Search files..." type="text" />
-          </div>
-          <div class="bp3-navbar-group bp3-align-right">
-            <button class="bp3-button bp3-minimal bp3-icon-home">Home</button>
-            <button class="bp3-button bp3-minimal bp3-icon-document">Files</button>
-            <span class="bp3-navbar-divider"></span>
-            <button class="bp3-button bp3-minimal bp3-icon-user"></button>
-            <button class="bp3-button bp3-minimal bp3-icon-notifications"></button>
-            <button class="bp3-button bp3-minimal bp3-icon-cog"></button>
-          </div>
-        </div>
-      </nav>
+      <div>
+          <Navbar>
+            <Navbar.Group align={Alignment.LEFT}>
+                <Navbar.Heading>Blueprint</Navbar.Heading>
+                <Navbar.Divider />
+                <Button className="bp3-minimal" icon="home" text="Home" />
+                <Button className="bp3-minimal" icon="document" text="Files" />
+            </Navbar.Group>
+          </Navbar>
+          <Home/>
+      </div>
     );
   }
 }
