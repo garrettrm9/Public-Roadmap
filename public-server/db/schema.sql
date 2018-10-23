@@ -29,10 +29,26 @@ CREATE TABLE features (
   FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
+DROP TABLE IF EXISTS votes;
+
+CREATE TABLE votes (
+  id BIGSERIAL PRIMARY KEY,
+  user_id INTEGER,
+  feature_id INTEGER
+);
+
+DROP TABLE IF EXISTS follows;
+
+CREATE TABLE follows (
+  id BIGSERIAL PRIMARY KEY,
+  user_id INTEGER,
+  feature_id INTEGER
+)
+
 DROP TABLE IF EXISTS companies;
 
 CREATE TABLE companies (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255),
   features VARCHAR(8000)
-)
+);

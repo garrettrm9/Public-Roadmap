@@ -30,6 +30,12 @@ app.get("/isLoggedIn", authService.isLoggedIn, (req, res) => {
 const featureRouter = require("./controllers/features");
 app.use("/features", featureRouter);
 
+const companyRouter = require("./controllers/companies");
+app.use("/companies", companyRouter);
+
+const activityRouter = require("./controllers/activities");
+app.use("/activities", activityRouter);
+
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/build/index.html"));
 });
