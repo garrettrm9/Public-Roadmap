@@ -13,7 +13,7 @@ CREATE TABLE users (
   features_voted VARCHAR(8000)
 );
 
-DROP TABLE IF EXISTS features;
+DROP TABLE IF EXISTS features CASCADE;
 
 CREATE TABLE features (
   id BIGSERIAL PRIMARY KEY,
@@ -25,16 +25,15 @@ CREATE TABLE features (
   business_value VARCHAR(255),
   wireframes VARCHAR(255),
   attachments VARCHAR(255),
-  user_id INTEGER,
-  FOREIGN KEY(user_id) REFERENCES users(id)
+  votes INTEGER
 );
 
 DROP TABLE IF EXISTS votes;
 
 CREATE TABLE votes (
   id BIGSERIAL PRIMARY KEY,
-  user_id INTEGER,
-  feature_id INTEGER
+  feature_id INTEGER,
+  FOREIGN KEY(feature_id) REFERENCES features(id)
 );
 
 DROP TABLE IF EXISTS follows;
@@ -43,7 +42,7 @@ CREATE TABLE follows (
   id BIGSERIAL PRIMARY KEY,
   user_id INTEGER,
   feature_id INTEGER
-)
+);
 
 DROP TABLE IF EXISTS companies;
 
