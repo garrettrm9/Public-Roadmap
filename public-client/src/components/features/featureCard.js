@@ -21,7 +21,8 @@ export default class FeatureCard extends Component {
       feature.business_value,
       feature.wireframes,
       feature.attachments,
-      votes
+      votes,
+      feature.date_created
     );
   }
 
@@ -38,18 +39,23 @@ export default class FeatureCard extends Component {
 
   render() {
     const feature = this.props.feature;
+    const date = feature.date_created.split("T");
     return (
-      <Card
-        interactive={true}
-        elevation={Elevation.FOUR}
-        className="featureCards"
-      >
-        <h4>Feature name: {feature.name}</h4>
-        <h4>Author: {feature.author}</h4>
-        <h4>Purpose: {feature.purpose}</h4>
-        <h4>Votes: {feature.votes}</h4>
-        <Button onClick={this.newVote}>Vote or die!</Button>
-      </Card>
+      <div>
+        <Card
+          interactive={true}
+          // elevation={Elevation.FOUR}
+          className="featureCards bp3-card bp3-interactive"
+        >
+          <h4>Feature name: {feature.name}</h4>
+          <h4>Author: {feature.author}</h4>
+          <h4>Purpose: {feature.purpose}</h4>
+          <h4>Votes: {feature.votes}</h4>
+          <h4>Created: {date[0]}</h4>
+          <Button onClick={this.newVote}>Vote or die!</Button>
+        </Card>
+        <div className="cardDivider" />
+      </div>
     );
   }
 }
