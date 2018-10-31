@@ -96,15 +96,16 @@ class App extends Component {
     })
       .then(response => {
         TokenService.save(response.data.token);
-        console.log("login response", response.data);
+        // console.log("login response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
+        this.getAllFeatures();
       })
       .catch(err => console.log("login err", err));
   }
 
   register(email, password) {
     // console.log("register app.js", data);
-    this.setState({ isLoggedIn: "WAITING" });
+    // this.setState({ isLoggedIn: "WAITING" });
     axios({
       url: "http://localhost:8080/users",
       method: "POST",
@@ -112,7 +113,7 @@ class App extends Component {
     })
       .then(response => {
         TokenService.save(response.data.token);
-        console.log("register response", response.data);
+        // console.log("register response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
       })
       .catch(err => console.log("register err", err));
