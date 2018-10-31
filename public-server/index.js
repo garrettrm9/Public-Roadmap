@@ -20,12 +20,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const userRouter = require("./controllers/users");
 app.use("/users", userRouter);
 
-app.get("/isLoggedIn", authService.isLoggedIn, (req, res) => {
-  res.json({
-    isLoggedIn: res.locals.isLoggedIn,
-    user: res.locals.user
-  });
-});
+// app.get("/isLoggedIn", authService.isLoggedIn, (req, res) => {
+//   res.json({
+//     isLoggedIn: res.locals.isLoggedIn,
+//     user: res.locals.user
+//   });
+// });
 
 const featureRouter = require("./controllers/features");
 app.use("/features", featureRouter);

@@ -3,7 +3,7 @@ import FilteredFeatureList from "../features/filteredFeatureList.js";
 
 import {
   // Alignment,
-  // Button,
+  Button,
   Classes
   // H5,
   // Navbar,
@@ -22,6 +22,7 @@ export default class Home extends Component {
     return (
       <div>
         <h3 className={Classes.HEADING}>Browse Feature Requests</h3>
+        <Button icon="log-out" text="Logout" onClick={this.props.logout} />
         <FilteredFeatureList
           editFeature={this.props.editFeature}
           unfilteredFeatureList={this.props.unfilteredFeatureList}

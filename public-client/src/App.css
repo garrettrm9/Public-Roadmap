@@ -7,3 +7,15 @@
 .featureCardsContainer {
   text-align: center;
 }
+
+.buttonDivider {
+  padding-bottom: 15px;
+}
+
+.loginDivider {
+  padding-bottom: 25px;
+}
+
+.loginDivider2 {
+  padding-bottom: 75px;
+}
