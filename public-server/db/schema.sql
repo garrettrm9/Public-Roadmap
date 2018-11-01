@@ -25,7 +25,8 @@ CREATE TABLE features (
   business_value VARCHAR(255),
   wireframes VARCHAR(255),
   attachments VARCHAR(255),
-  votes INTEGER
+  votes INTEGER,
+  date_created DATE
 );
 
 DROP TABLE IF EXISTS votes;

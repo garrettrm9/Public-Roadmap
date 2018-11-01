@@ -2,6 +2,11 @@
 
 .featureCards {
   width: 25%;
+  margin: auto;
+}
+
+.cardDivider {
+  padding-bottom: 25px;
 }
 
 .featureCardsContainer {
