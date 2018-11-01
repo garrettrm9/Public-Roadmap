@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Elevation } from "@blueprintjs/core";
+import { Button, Card } from "@blueprintjs/core";
 
 export default class FeatureCard extends Component {
   constructor(props) {
