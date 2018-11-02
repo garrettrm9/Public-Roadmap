@@ -21,6 +21,7 @@ class App extends Component {
     super(props);
     this.state = {
       unfilteredFeatureList: [],
+      filteredFeatureList: [],
       count: "",
       isLoggedIn: false,
       user: []
@@ -31,6 +32,26 @@ class App extends Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.register = this.register.bind(this);
+    this.sortByVotes = this.sortByVotes.bind(this);
+    this.sortByDate = this.sortByDate.bind(this);
+  }
+
+  sortByVotes() {
+    const newArray = this.state.unfilteredFeatureList.sort(function(a, b) {
+      return b.votes - a.votes;
+    });
+    // console.log("sortByVotes newArray", newArray);
+    this.setState({ filteredFeatureList: newArray });
+  }
+
+  sortByDate() {
+    const newArray = this.state.filteredFeatureList.sort(function(a, b) {
+      const dateA = new Date(a.date_created);
+      const dateB = new Date(b.date_created);
+      return dateB - dateA;
+    });
+    // console.log("sortByDate newArray", newArray);
+    this.setState({ filteredFeatureList: newArray });
   }
 
   getAllFeatures() {
@@ -40,6 +61,7 @@ class App extends Component {
       .then(response => {
         // console.log("getAllFeatures response", response.data);
         this.setState({ unfilteredFeatureList: response.data });
+        this.sortByVotes();
       })
       .catch(err => console.log(`getAllFeatures err: ${err}`));
   }
@@ -54,9 +76,10 @@ class App extends Component {
     businessValue,
     wireframes,
     attachments,
-    votes
+    votes,
+    dateCreated
   ) {
-    console.log("editFeature id", id);
+    // console.log("editFeature id", id);
     // console.log("editFeature name", name);
     // console.log("editFeature author", author);
     // console.log("editFeature purpose", purpose);
@@ -65,7 +88,7 @@ class App extends Component {
     // console.log("editFeature businessValue", businessValue);
     // console.log("editFeature wireframes", wireframes);
     // console.log("editFeature attachments", attachments);
-    console.log("editFeature votes", votes);
+    // console.log("editFeature votes", votes);
     axios({
       url: `http://localhost:8080/features/${id}`,
       method: "PUT",
@@ -78,7 +101,8 @@ class App extends Component {
         business_value: businessValue,
         wireframes: wireframes,
         attachments: attachments,
-        votes: votes
+        votes: votes,
+        date_created: dateCreated
       }
     })
       .then(response => {
@@ -88,30 +112,28 @@ class App extends Component {
   }
 
   login(email, password) {
-    // console.log("login app.js", data);
     axios({
       url: "http://localhost:8080/users/login",
       method: "POST",
       data: { email: email, password: password }
     })
       .then(response => {
+        // this.getAllFeatures();
         TokenService.save(response.data.token);
         // console.log("login response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
-        this.getAllFeatures();
       })
       .catch(err => console.log("login err", err));
   }
 
   register(email, password) {
-    // console.log("register app.js", data);
-    // this.setState({ isLoggedIn: "WAITING" });
     axios({
       url: "http://localhost:8080/users",
       method: "POST",
       data: { email: email, password: password }
     })
       .then(response => {
+        // this.getAllFeatures();
         TokenService.save(response.data.token);
         // console.log("register response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
@@ -125,6 +147,7 @@ class App extends Component {
       isLoggedIn: false,
       user: [],
       unfilteredFeatureList: [],
+      filteredFeatureList: [],
       count: ""
     });
     // console.log("logged out user?", this.state.user);
@@ -145,9 +168,9 @@ class App extends Component {
   //     .catch(err => console.log(`getVotes err: ${err}`));
   // }
 
-  componentDidMount() {
-    this.getAllFeatures();
-  }
+  // componentDidMount() {
+  //   this.getAllFeatures();
+  // }
 
   render() {
     if (this.state.isLoggedIn === true) {
@@ -164,8 +187,12 @@ class App extends Component {
           <Home
             logout={this.logout}
             // getVotes={this.getVotes}
+            getAllFeatures={this.getAllFeatures}
             editFeature={this.editFeature}
             unfilteredFeatureList={this.state.unfilteredFeatureList}
+            filteredFeatureList={this.state.filteredFeatureList}
+            sortByVotes={this.sortByVotes}
+            sortByDate={this.sortByDate}
             // votes={this.state.votes}
           />
         </div>
