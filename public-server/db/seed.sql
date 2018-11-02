@@ -4,7 +4,7 @@
 --   ('user3', 'testLAST', 'three', 'three', 'three', 'three', 'three');
 
 
-INSERT INTO features (name, author, purpose, user_story, acceptance_criteria, business_value, wireframes, attachments, votes, date_created) VALUES
+INSERT INTO features (name, author, purpose, user_story, acceptance_criteria, business_value, wireframes, attachments, votes, date_last_updated) VALUES
   ('feature1', 'user1', 'one', 'one', 'one', 'one', 'one', 'one', 6, '2018-10-29'),
   ('feature2', 'user2', 'two', 'two', 'two', 'two', 'two', 'two', 5, '2018-10-01'),
   ('feature3', 'user3', 'three', 'three', 'three', 'three', 'three', 'three', 4, '2018-10-10'),

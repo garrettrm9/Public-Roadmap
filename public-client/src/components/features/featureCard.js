@@ -23,7 +23,7 @@ export default class FeatureCard extends Component {
       feature.wireframes,
       feature.attachments,
       votes,
-      feature.date_created
+      feature.date_last_updated
     );
     // this.props.sortByVotes();
   }
@@ -41,7 +41,7 @@ export default class FeatureCard extends Component {
 
   render() {
     const feature = this.props.feature;
-    const date = feature.date_created.split("T");
+    const date = feature.date_last_updated.split("T");
     return (
       <div>
         <Card
@@ -53,7 +53,7 @@ export default class FeatureCard extends Component {
           <h4>Author: {feature.author}</h4>
           <h4>Purpose: {feature.purpose}</h4>
           <h4>Votes: {feature.votes}</h4>
-          <h4>Created: {date[0]}</h4>
+          <h4>Last updated: {date[0]}</h4>
           <Button onClick={this.newVote}>Vote or die!</Button>
         </Card>
         <div className="cardDivider" />
