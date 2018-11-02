@@ -32,7 +32,7 @@ feature.getUserFeatures = (req, res, next) => {
 feature.newFeature = (req, res, next) => {
   db
     .one(
-      "INSERT INTO features (name, author, purpose, user_story, acceptance_criteria, business_value, wireframes, attachments, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id",
+      "INSERT INTO features (name, author, purpose, user_story, acceptance_criteria, business_value, wireframes, attachments, votes, date_last_updated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
       [
         req.body.name,
         req.body.author,
@@ -42,7 +42,8 @@ feature.newFeature = (req, res, next) => {
         req.body.business_value,
         req.body.wireframes,
         req.body.attachments,
-        req.params.user_id
+        req.body.votes,
+        req.body.date_last_updated
       ]
     )
     .then(id => {
@@ -58,7 +59,7 @@ feature.newFeature = (req, res, next) => {
 feature.editFeature = function(req, res, next) {
   db
     .one(
-      "UPDATE features SET name=$1, author=$2, purpose=$3, user_story=$4, acceptance_criteria=$5, business_value=$6, wireframes=$7, attachments=$8, votes=$9, date_created=$10 WHERE id=$11 RETURNING *",
+      "UPDATE features SET name=$1, author=$2, purpose=$3, user_story=$4, acceptance_criteria=$5, business_value=$6, wireframes=$7, attachments=$8, votes=$9, date_last_updated=$10 WHERE id=$11 RETURNING *",
       [
         req.body.name,
         req.body.author,
@@ -69,7 +70,7 @@ feature.editFeature = function(req, res, next) {
         req.body.wireframes,
         req.body.attachments,
         req.body.votes,
-        req.body.date_created,
+        req.body.date_last_updated,
         req.params.feature_id
       ]
     )

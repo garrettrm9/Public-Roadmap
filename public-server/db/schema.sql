@@ -26,7 +26,7 @@ CREATE TABLE features (
   wireframes VARCHAR(255),
   attachments VARCHAR(255),
   votes INTEGER,
-  date_created DATE
+  date_last_updated DATE
 );
 
 DROP TABLE IF EXISTS votes;

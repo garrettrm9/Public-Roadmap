@@ -11,7 +11,7 @@ router.get("/:user_id", feature.getUserFeatures, (req, res) => {
   res.json(features);
 });
 
-router.post("/:user_id", feature.newFeature, (req, res) => {
+router.post("/", feature.newFeature, (req, res) => {
   res.json(res.locals);
 });
 

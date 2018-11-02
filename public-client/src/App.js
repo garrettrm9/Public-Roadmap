@@ -46,8 +46,8 @@ class App extends Component {
 
   sortByDate() {
     const newArray = this.state.filteredFeatureList.sort(function(a, b) {
-      const dateA = new Date(a.date_created);
-      const dateB = new Date(b.date_created);
+      const dateA = new Date(a.date_last_updated);
+      const dateB = new Date(b.date_last_updated);
       return dateB - dateA;
     });
     // console.log("sortByDate newArray", newArray);
@@ -77,7 +77,7 @@ class App extends Component {
     wireframes,
     attachments,
     votes,
-    dateCreated
+    dateLastUpdated
   ) {
     // console.log("editFeature id", id);
     // console.log("editFeature name", name);
@@ -102,7 +102,7 @@ class App extends Component {
         wireframes: wireframes,
         attachments: attachments,
         votes: votes,
-        date_created: dateCreated
+        date_last_updated: dateLastUpdated
       }
     })
       .then(response => {
