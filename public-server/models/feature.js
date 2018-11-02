@@ -58,7 +58,7 @@ feature.newFeature = (req, res, next) => {
 feature.editFeature = function(req, res, next) {
   db
     .one(
-      "UPDATE features SET name=$1, author=$2, purpose=$3, user_story=$4, acceptance_criteria=$5, business_value=$6, wireframes=$7, attachments=$8, votes=$9 WHERE id=$10 RETURNING *",
+      "UPDATE features SET name=$1, author=$2, purpose=$3, user_story=$4, acceptance_criteria=$5, business_value=$6, wireframes=$7, attachments=$8, votes=$9, date_created=$10 WHERE id=$11 RETURNING *",
       [
         req.body.name,
         req.body.author,
@@ -69,6 +69,7 @@ feature.editFeature = function(req, res, next) {
         req.body.wireframes,
         req.body.attachments,
         req.body.votes,
+        req.body.date_created,
         req.params.feature_id
       ]
     )

@@ -5,12 +5,7 @@ import FeatureCard from "./featureCard";
 export default class FilteredFeatureList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      filteredFeatureList: []
-    };
     this.renderFeatureCards = this.renderFeatureCards.bind(this);
-    this.sortByDate = this.sortByDate.bind(this);
-    this.sortByVotes = this.sortByVotes.bind(this);
   }
 
   renderFeatureCards(feature, index) {
@@ -18,37 +13,22 @@ export default class FilteredFeatureList extends Component {
       <FeatureCard
         key={index}
         feature={feature}
+        // getAllFeatures={this.props.getAllFeatures}
+        checkNewVotes={this.props.checkNewVotes}
         editFeature={this.props.editFeature}
+        sortByVotes={this.props.sortByVotes}
         // getVotes={this.props.getVotes}
         // votes={this.props.votes}
       />
     );
   }
 
-  sortByDate() {
-    const newArray = this.props.unfilteredFeatureList.sort(function(a, b) {
-      const dateA = new Date(a.date_created);
-      const dateB = new Date(b.date_created);
-      return dateB - dateA;
-    });
-    // console.log("sortByDate newArray", newArray);
-    this.setState({ filteredFeatureList: newArray });
-  }
-
-  sortByVotes() {
-    const newArray = this.props.unfilteredFeatureList.sort(function(a, b) {
-      return b.votes - a.votes;
-    });
-    // console.log("sortByVotes newArray", newArray);
-    this.setState({ filteredFeatureList: newArray });
-  }
-
-  componentDidMount() {
-    this.sortByVotes();
-  }
+  // componentDidMount() {
+  //   this.props.sortByVotes;
+  // }
 
   render() {
-    const featureCards = this.state.filteredFeatureList.map(
+    const featureCards = this.props.filteredFeatureList.map(
       this.renderFeatureCards
     );
     // const sortedByDateCards = this.sortByDate(this.props.unfilteredFeatureList);
@@ -66,8 +46,8 @@ export default class FilteredFeatureList extends Component {
     return (
       <div className="featureCardsContainer">
         <h3>filteredfeaturelist</h3>
-        <Button onClick={this.sortByDate}>Sort by date!</Button>
-        <Button onClick={this.sortByVotes}>Sort by votes!</Button>
+        <Button onClick={this.props.sortByDate}>Sort by date!</Button>
+        <Button onClick={this.props.sortByVotes}>Sort by votes!</Button>
         {featureCards}
       </div>
     );

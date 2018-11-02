@@ -11,6 +11,7 @@ export default class FeatureCard extends Component {
     const feature = this.props.feature;
     const votes = feature.votes + 1;
     // console.log("FeatureCard votes", votes);
+    // this.props.checkNewVotes(true);
     this.props.editFeature(
       feature.id,
       feature.name,
@@ -24,6 +25,7 @@ export default class FeatureCard extends Component {
       votes,
       feature.date_created
     );
+    // this.props.sortByVotes();
   }
 
   // componentDidMount() {
