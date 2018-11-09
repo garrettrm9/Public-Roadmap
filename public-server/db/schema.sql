@@ -13,6 +13,13 @@ CREATE TABLE users (
   features_voted VARCHAR(8000)
 );
 
+DROP TABLE IF EXISTS products CASCADE;
+
+CREATE TABLE products (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255)
+);
+
 DROP TABLE IF EXISTS features CASCADE;
 
 CREATE TABLE features (
@@ -26,7 +33,9 @@ CREATE TABLE features (
   wireframes VARCHAR(255),
   attachments VARCHAR(255),
   votes INTEGER,
-  date_last_updated DATE
+  date_last_updated DATE,
+  product_id INTEGER,
+  FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 DROP TABLE IF EXISTS votes;

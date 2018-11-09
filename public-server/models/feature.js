@@ -74,8 +74,8 @@ feature.editFeature = function(req, res, next) {
         req.params.feature_id
       ]
     )
-    .then(user => {
-      res.locals.user = user;
+    .then(feature => {
+      res.locals.feature = feature;
       next();
     })
     .catch(err => {

@@ -27,6 +27,9 @@ app.use("/users", userRouter);
 //   });
 // });
 
+const productRouter = require("./controllers/products");
+app.use("/products", productRouter);
+
 const featureRouter = require("./controllers/features");
 app.use("/features", featureRouter);
 
