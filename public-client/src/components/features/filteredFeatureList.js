@@ -6,6 +6,11 @@ export default class FilteredFeatureList extends Component {
   constructor(props) {
     super(props);
     this.renderFeatureCards = this.renderFeatureCards.bind(this);
+    this.handleSeeUserFollows = this.handleSeeUserFollows.bind(this)
+  }
+
+  handleSeeUserFollows(){
+    this.props.seeUserFollows(this.props.user.id)
   }
 
   renderFeatureCards(feature, index) {
@@ -13,6 +18,7 @@ export default class FilteredFeatureList extends Component {
       <FeatureCard
         key={index}
         feature={feature}
+        products={this.props.products}                    
         // getAllFeatures={this.props.getAllFeatures}
         checkNewVotes={this.props.checkNewVotes}
         editFeature={this.props.editFeature}
@@ -48,6 +54,7 @@ export default class FilteredFeatureList extends Component {
         <h3>filteredfeaturelist</h3>
         <Button onClick={this.props.sortByDate}>Sort by date!</Button>
         <Button onClick={this.props.sortByVotes}>Sort by votes!</Button>
+        <Button onClick={this.handleSeeUserFollows}>See your followed features!</Button>
         {featureCards}
       </div>
     );

@@ -20,12 +20,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      products: [],
       unfilteredFeatureList: [],
       filteredFeatureList: [],
       count: "",
       isLoggedIn: false,
       user: []
     };
+    this.getAllProducts = this.getAllProducts.bind(this)
     this.getAllFeatures = this.getAllFeatures.bind(this);
     this.editFeature = this.editFeature.bind(this);
     // this.getVotes = this.getVotes.bind(this);
@@ -34,6 +36,7 @@ class App extends Component {
     this.register = this.register.bind(this);
     this.sortByVotes = this.sortByVotes.bind(this);
     this.sortByDate = this.sortByDate.bind(this);
+    // this.seeUserFollows = this.seeUserFollows.bind(this)
   }
 
   sortByVotes() {
@@ -54,12 +57,21 @@ class App extends Component {
     this.setState({ filteredFeatureList: newArray });
   }
 
+  getAllProducts(){
+    axios({
+      url: "http://localhost:8080/products"      
+    })
+      .then(response => {
+        this.setState({products: response.data})
+      })
+      .catch(err => console.log(`getAllProducts err: ${err}`));
+  }
+
   getAllFeatures() {
     axios({
       url: "http://localhost:8080/features"
     })
       .then(response => {
-        // console.log("getAllFeatures response", response.data);
         this.setState({ unfilteredFeatureList: response.data });
         this.sortByVotes();
       })
@@ -69,7 +81,7 @@ class App extends Component {
   editFeature(
     id,
     name,
-    author,
+    // author,
     purpose,
     userStory,
     acceptanceCriteria,
@@ -77,7 +89,9 @@ class App extends Component {
     wireframes,
     attachments,
     votes,
-    dateLastUpdated
+    dateLastUpdated,
+    productName,
+    userEmail
   ) {
     // console.log("editFeature id", id);
     // console.log("editFeature name", name);
@@ -94,7 +108,7 @@ class App extends Component {
       method: "PUT",
       data: {
         name: name,
-        author: author,
+        // author: author,
         purpose: purpose,
         user_story: userStory,
         acceptance_criteria: acceptanceCriteria,
@@ -102,7 +116,9 @@ class App extends Component {
         wireframes: wireframes,
         attachments: attachments,
         votes: votes,
-        date_last_updated: dateLastUpdated
+        date_last_updated: dateLastUpdated,
+        product_name: productName,
+        user_email: userEmail
       }
     })
       .then(response => {
@@ -153,6 +169,20 @@ class App extends Component {
     // console.log("logged out user?", this.state.user);
   }
 
+  // seeUserFollows(userID){
+  //   axios({
+  //     url: `http://localhost:8080/activities/follows/${userID}`
+  //   })
+  //   .then(response => {
+  //     console.log("seeUserFollows response", response.data)
+  //     const data = response.data
+  //     data.map(follow => {
+  //       this.getFeature(follow.id)
+  //     })
+  //   })
+  //     .catch(err => console.log(`seeUserFollows err: ${err}`));
+  // }
+
   // getVotes(feature_id) {
   //   axios({
   //     url: `http://localhost:8080/activities/votes/${feature_id}`
@@ -168,9 +198,9 @@ class App extends Component {
   //     .catch(err => console.log(`getVotes err: ${err}`));
   // }
 
-  // componentDidMount() {
-  //   this.getAllFeatures();
-  // }
+  componentDidMount() {
+    this.getAllProducts();
+  }
 
   render() {
     if (this.state.isLoggedIn === true) {
@@ -189,10 +219,13 @@ class App extends Component {
             // getVotes={this.getVotes}
             getAllFeatures={this.getAllFeatures}
             editFeature={this.editFeature}
-            unfilteredFeatureList={this.state.unfilteredFeatureList}
-            filteredFeatureList={this.state.filteredFeatureList}
             sortByVotes={this.sortByVotes}
             sortByDate={this.sortByDate}
+            seeUserFollows={this.seeUserFollows}
+            products={this.state.products}            
+            unfilteredFeatureList={this.state.unfilteredFeatureList}
+            filteredFeatureList={this.state.filteredFeatureList}
+            user={this.state.user}
             // votes={this.state.votes}
           />
         </div>

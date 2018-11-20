@@ -14,19 +14,6 @@ activity.getVotes = (req, res, next) => {
     });
 };
 
-activity.getAllFollows = (req, res, next) => {
-  db
-    .manyOrNone("SELECT * FROM follows")
-    .then(follows => {
-      res.locals.follows = follows;
-      next();
-    })
-    .catch(error => {
-      console.log("error from getAllFollows model", error);
-      next(error);
-    });
-};
-
 activity.addVote = (req, res, next) => {
   db
     .one("INSERT INTO votes (feature_id) VALUES ($1) RETURNING *", [
@@ -42,22 +29,6 @@ activity.addVote = (req, res, next) => {
     });
 };
 
-activity.addFollow = (req, res, next) => {
-  db
-    .one(
-      "INSERT INTO votes (user_id, feature_id) VALUES ($1, $2) RETURNING *",
-      [req.body.user_id, req.body.feature_id]
-    )
-    .then(vote => {
-      res.locals.vote = vote;
-      next();
-    })
-    .catch(error => {
-      console.log("error from addFollow model", error);
-      next(error);
-    });
-};
-
 activity.deleteVote = (req, res, next) => {
   db
     .none("DELETE from votes WHERE id=$1", [req.params.id])
@@ -66,6 +37,47 @@ activity.deleteVote = (req, res, next) => {
     })
     .catch(error => {
       console.log("error from deleteVote model", error);
+      next(error);
+    });
+};
+
+activity.getAllFollows = (req, res, next) => {
+  db
+    .manyOrNone("SELECT * FROM follows")
+    .then(follows => {
+      res.locals.follows = follows;
+      next();
+    })
+    .catch(error => {
+      console.log("error from getAllFollows model", error);
+      next(error);
+    });
+};
+
+activity.getFollows = (req, res, next) => {
+  db
+    .manyOrNone("SELECT * FROM follows WHERE user_id = $1", [req.params.id])
+    .then(follows => {
+      res.locals.follows = follows;
+      next()
+    })
+    .catch(error => {
+      console.log("error from getFollows model", error)
+    })
+}
+
+activity.addFollow = (req, res, next) => {
+  db
+    .one(
+      "INSERT INTO follows (feature_id, user_id) VALUES ($1, $2) RETURNING *",
+      [req.body.feature_id, req.body.user_id]
+    )
+    .then(vote => {
+      res.locals.vote = vote;
+      next();
+    })
+    .catch(error => {
+      console.log("error from addFollow model", error);
       next(error);
     });
 };
