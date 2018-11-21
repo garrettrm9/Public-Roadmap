@@ -18,10 +18,14 @@ export default class FilteredFeatureList extends Component {
       <FeatureCard
         key={index}
         feature={feature}
-        products={this.props.products}                    
+        products={this.props.products}
+        votes={this.props.votes}       
+        user={this.props.user}
+        addVote={this.props.addVote}
+        deleteVote={this.props.deleteVote}                                 
         // getAllFeatures={this.props.getAllFeatures}
         checkNewVotes={this.props.checkNewVotes}
-        editFeature={this.props.editFeature}
+        // editFeature={this.props.editFeature}
         sortByVotes={this.props.sortByVotes}
         // getVotes={this.props.getVotes}
         // votes={this.props.votes}

@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const activity = require("../models/activity");
 
-router.get("/votes/:id", activity.getVotes, (req, res) => {
+router.get("/votes", activity.getAllVotes, (req, res) => {
   const { votes } = res.locals;
   res.json(votes);
 });
 
-router.post("/votes", activity.addVote, (req, res) => {
+router.post("/votes/:id", activity.addVote, (req, res) => {
   res.json(res.locals);
 });
 

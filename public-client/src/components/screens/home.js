@@ -109,9 +109,13 @@ export default class Home extends Component {
           checkNewVotes={this.checkNewVotes}
           getAllFeatures={this.props.getAllFeatures}
           editFeature={this.props.editFeature}
+          addVote={this.props.addVote}                                 
+          deleteVote={this.props.deleteVote}                                 
           sortByVotes={this.props.sortByVotes}
           sortByDate={this.props.sortByDate}
-          seeUserFollows={this.props.seeUserFollows}
+          // getVotes={this.props.getVotes}
+          // seeUserFollows={this.props.seeUserFollows}
+          votes={this.props.votes}            
           filteredFeatureList={this.props.filteredFeatureList}
           products={this.props.products}            
           user={this.props.user}

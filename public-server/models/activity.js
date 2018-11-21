@@ -1,9 +1,9 @@
 const db = require("../db/index.js");
 const activity = {};
 
-activity.getVotes = (req, res, next) => {
+activity.getAllVotes = (req, res, next) => {
   db
-    .manyOrNone("SELECT * FROM votes WHERE feature_id=$1", [req.params.id])
+    .manyOrNone("SELECT * FROM votes")
     .then(votes => {
       res.locals.votes = votes;
       next();
@@ -16,8 +16,9 @@ activity.getVotes = (req, res, next) => {
 
 activity.addVote = (req, res, next) => {
   db
-    .one("INSERT INTO votes (feature_id) VALUES ($1) RETURNING *", [
-      req.body.feature_id
+    .one("INSERT INTO votes (feature_id, user_email) VALUES ($1, $2) RETURNING *", [
+      req.params.id,
+      req.body.user_email
     ])
     .then(vote => {
       res.locals.vote = vote;
@@ -31,7 +32,7 @@ activity.addVote = (req, res, next) => {
 
 activity.deleteVote = (req, res, next) => {
   db
-    .none("DELETE from votes WHERE id=$1", [req.params.id])
+    .none("DELETE from votes WHERE feature_id=$1 AND user_email=$2", [req.params.id, req.body.user_email])
     .then(() => {
       next();
     })

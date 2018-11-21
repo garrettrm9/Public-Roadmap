@@ -25,12 +25,15 @@ class App extends Component {
       filteredFeatureList: [],
       count: "",
       isLoggedIn: false,
-      user: []
+      user: [],
+      votes: ""
     };
     this.getAllProducts = this.getAllProducts.bind(this)
     this.getAllFeatures = this.getAllFeatures.bind(this);
     this.editFeature = this.editFeature.bind(this);
-    // this.getVotes = this.getVotes.bind(this);
+    this.getVotes = this.getVotes.bind(this);
+    this.addVote = this.addVote.bind(this)
+    this.deleteVote = this.deleteVote.bind(this)
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.register = this.register.bind(this);
@@ -39,6 +42,7 @@ class App extends Component {
     // this.seeUserFollows = this.seeUserFollows.bind(this)
   }
 
+// ----------------------------SORTING----------------------------
   sortByVotes() {
     const newArray = this.state.unfilteredFeatureList.sort(function(a, b) {
       return b.votes - a.votes;
@@ -57,6 +61,8 @@ class App extends Component {
     this.setState({ filteredFeatureList: newArray });
   }
 
+// ----------------------------PRODUCTS----------------------------
+
   getAllProducts(){
     axios({
       url: "http://localhost:8080/products"      
@@ -67,12 +73,84 @@ class App extends Component {
       .catch(err => console.log(`getAllProducts err: ${err}`));
   }
 
+// ----------------------------VOTES----------------------------
+
+  getVotes() {
+    axios({
+      url: 'http://localhost:8080/activities/votes/'
+    })
+      .then(response => {
+        // console.log("getVotes", response.data);
+        // console.log("feature_id", feature_id);
+        // const length = response.data
+        // console.log("getVotes votes length", length)
+        // const data = response.data;
+        // const count = data.length;
+        // console.log("getVotes", count);
+        this.setState({ votes: response.data });
+      })
+      .catch(err => console.log(`getVotes err: ${err}`));
+  }
+
+  addVote(featureID, userEmail){
+    axios({
+      url: `http://localhost:8080/activities/votes/${featureID}`,
+      method: "POST",
+      data: {
+        user_email: userEmail
+      }
+    })
+    .then(response => {
+      this.getVotes();
+      this.getAllFeatures();
+    })
+    .catch(err => console.log(`addVote err: ${err}`));
+  }
+
+  deleteVote(featureID, userEmail){
+    axios({
+      url: `http://localhost:8080/activities/votes/${featureID}`,
+      method: "DELETE",
+      data: {
+        user_email: userEmail
+      }
+    })
+    .then(response => {
+      this.getVotes();
+      this.getAllFeatures();
+    })
+    .catch(err => console.log(`deleteVote err: ${err}`));    
+  }
+
+// ----------------------------FEATURES----------------------------
+
   getAllFeatures() {
     axios({
       url: "http://localhost:8080/features"
     })
       .then(response => {
-        this.setState({ unfilteredFeatureList: response.data });
+        const features = response.data
+        features.map(feature => {
+          // console.log("feature", feature)
+          const votesFilteredArr = []
+          const votes = this.state.votes
+          votes.map(vote => {
+            // console.log("vote", vote)
+            const voteFeatureID = JSON.stringify(vote.feature_id)
+            // console.log("vote.feature_id", typeof voteFeatureID)
+            // console.log("feature.id", typeof feature.id)
+
+            if (voteFeatureID === feature.id) {
+              votesFilteredArr.push(vote)
+              // console.log("yes")
+            }
+          // console.log("getAllFeatures votesFilteredArr", votesFilteredArr)
+          const length = votesFilteredArr.length
+          feature.votes = length
+          })
+        })
+        // console.log("getAllFeatures features", features)
+        this.setState({ unfilteredFeatureList: features });
         this.sortByVotes();
       })
       .catch(err => console.log(`getAllFeatures err: ${err}`));
@@ -126,6 +204,8 @@ class App extends Component {
       })
       .catch(err => console.log(`editFeature err: ${err}`));
   }
+
+// ----------------------------AUTH----------------------------
 
   login(email, password) {
     axios({
@@ -183,23 +263,16 @@ class App extends Component {
   //     .catch(err => console.log(`seeUserFollows err: ${err}`));
   // }
 
-  // getVotes(feature_id) {
-  //   axios({
-  //     url: `http://localhost:8080/activities/votes/${feature_id}`
-  //   })
-  //     .then(response => {
-  //       // console.log("getVotes", response.data);
-  //       // console.log("feature_id", feature_id);
-  //       const data = response.data;
-  //       const count = data.length;
-  //       // console.log("getVotes", count);
-  //       this.setState({ votes: count });
-  //     })
-  //     .catch(err => console.log(`getVotes err: ${err}`));
-  // }
 
   componentDidMount() {
+    this.getVotes()
     this.getAllProducts();
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.votes.length !== this.state.votes.length) {
+      this.getAllFeatures()
+    }
   }
 
   render() {
@@ -221,12 +294,16 @@ class App extends Component {
             editFeature={this.editFeature}
             sortByVotes={this.sortByVotes}
             sortByDate={this.sortByDate}
-            seeUserFollows={this.seeUserFollows}
-            products={this.state.products}            
+            addVote={this.addVote}  
+            deleteVote={this.deleteVote}                                                                            
+            // getVotes={this.getVotes}
+            // seeUserFollows={this.seeUserFollows}
+            products={this.state.products}
+            // votes={this.state.votes}            
             unfilteredFeatureList={this.state.unfilteredFeatureList}
             filteredFeatureList={this.state.filteredFeatureList}
             user={this.state.user}
-            // votes={this.state.votes}
+            votes={this.state.votes}
           />
         </div>
       );
