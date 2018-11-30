@@ -4,14 +4,26 @@ import {
   Button,
   // Classes,
   // H5,
-  Navbar
+  // Navbar,
+  Icon,
   // NavbarDivider,
   // NavbarGroup,
   // NavbarHeading,
-  // Switch
+  // Switch,
+  // Overlay,
+  Dialog
 } from "@blueprintjs/core";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import Home from "./Components/screens/home";
+import ProductList from "./Components/screens/productList";
+import ProductFeatures from "./Components/products/productFeatures";
 import Login from "./Components/screens/login";
+import NavBar from "./Components/NavBar/navBar";
 import "./App.css";
 import axios from "axios";
 import TokenService from "./Services/tokenService";
@@ -22,190 +34,160 @@ class App extends Component {
     this.state = {
       products: [],
       unfilteredFeatureList: [],
-      filteredFeatureList: [],
-      count: "",
       isLoggedIn: false,
       user: [],
-      votes: ""
+      votes: [],
+      follows: [],
+      productFeatures: []
     };
-    this.getAllProducts = this.getAllProducts.bind(this)
+    this.getAllActivities = this.getAllActivities.bind(this);
+    this.getAllProductFeatures = this.getAllProductFeatures.bind(this);
+    this.getAllProducts = this.getAllProducts.bind(this);
     this.getAllFeatures = this.getAllFeatures.bind(this);
-    this.editFeature = this.editFeature.bind(this);
-    this.getVotes = this.getVotes.bind(this);
-    this.addVote = this.addVote.bind(this)
-    this.deleteVote = this.deleteVote.bind(this)
+    this.addFeature = this.addFeature.bind(this);
+    this.newActivity = this.newActivity.bind(this);
+    this.deleteActivity = this.deleteActivity.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.register = this.register.bind(this);
-    this.sortByVotes = this.sortByVotes.bind(this);
-    this.sortByDate = this.sortByDate.bind(this);
-    // this.seeUserFollows = this.seeUserFollows.bind(this)
+    this.sortActivities = this.sortActivities.bind(this);
   }
 
-// ----------------------------SORTING----------------------------
-  sortByVotes() {
-    const newArray = this.state.unfilteredFeatureList.sort(function(a, b) {
-      return b.votes - a.votes;
-    });
-    // console.log("sortByVotes newArray", newArray);
-    this.setState({ filteredFeatureList: newArray });
-  }
+  // ----------------------------PRODUCTS----------------------------
 
-  sortByDate() {
-    const newArray = this.state.filteredFeatureList.sort(function(a, b) {
-      const dateA = new Date(a.date_last_updated);
-      const dateB = new Date(b.date_last_updated);
-      return dateB - dateA;
-    });
-    // console.log("sortByDate newArray", newArray);
-    this.setState({ filteredFeatureList: newArray });
-  }
-
-// ----------------------------PRODUCTS----------------------------
-
-  getAllProducts(){
+  getAllProducts() {
+    // console.log("getAllProducts str", str);
     axios({
-      url: "http://localhost:8080/products"      
+      url: "http://localhost:8080/products"
     })
       .then(response => {
-        this.setState({products: response.data})
+        this.setState({ products: response.data });
       })
       .catch(err => console.log(`getAllProducts err: ${err}`));
   }
 
-// ----------------------------VOTES----------------------------
+  // ----------------------------ACTIVITIES----------------------------
 
-  getVotes() {
+  sortActivities(activities) {
+    const votes = [];
+    const follows = [];
+    activities.map(activity => {
+      if (activity.type === "vote") {
+        votes.push(activity);
+      } else if (activity.type === "follow") {
+        follows.push(activity);
+      }
+    });
+    this.setState({ votes: votes, follows: follows });
+  }
+
+  getAllActivities() {
     axios({
-      url: 'http://localhost:8080/activities/votes/'
+      url: "http://localhost:8080/activities"
     })
       .then(response => {
-        // console.log("getVotes", response.data);
-        // console.log("feature_id", feature_id);
-        // const length = response.data
-        // console.log("getVotes votes length", length)
-        // const data = response.data;
-        // const count = data.length;
-        // console.log("getVotes", count);
-        this.setState({ votes: response.data });
+        const activities = response.data;
+        // console.log("getAllActivities resp", activities);
+        this.sortActivities(activities);
       })
-      .catch(err => console.log(`getVotes err: ${err}`));
+      .catch(err => console.log(`getAllActivities err: ${err}`));
   }
 
-  addVote(featureID, userEmail){
+  newActivity(featureID, userEmail, type) {
     axios({
-      url: `http://localhost:8080/activities/votes/${featureID}`,
+      url: `http://localhost:8080/activities/${featureID}`,
       method: "POST",
       data: {
+        type: type,
         user_email: userEmail
       }
     })
-    .then(response => {
-      this.getVotes();
-      this.getAllFeatures();
-    })
-    .catch(err => console.log(`addVote err: ${err}`));
+      .then(response => {
+        // this.getAllVotes();
+        this.getAllActivities();
+        this.getAllFeatures();
+      })
+      .catch(err => console.log(`newActivity err: ${err}`));
   }
 
-  deleteVote(featureID, userEmail){
+  deleteActivity(featureID, userEmail, type) {
     axios({
-      url: `http://localhost:8080/activities/votes/${featureID}`,
+      url: `http://localhost:8080/activities/${featureID}`,
       method: "DELETE",
       data: {
+        type: type,
         user_email: userEmail
       }
     })
-    .then(response => {
-      this.getVotes();
-      this.getAllFeatures();
-    })
-    .catch(err => console.log(`deleteVote err: ${err}`));    
+      .then(response => {
+        // this.getAllVotes();
+        this.getAllActivities();
+        this.getAllFeatures();
+      })
+      .catch(err => console.log(`deleteActivity err: ${err}`));
   }
 
-// ----------------------------FEATURES----------------------------
+  // ----------------------------FEATURES----------------------------
 
   getAllFeatures() {
+    // console.log("getAllProducts str", str);
     axios({
       url: "http://localhost:8080/features"
     })
       .then(response => {
-        const features = response.data
+        const features = response.data;
         features.map(feature => {
           // console.log("feature", feature)
-          const votesFilteredArr = []
-          const votes = this.state.votes
+          const votesFilteredArr = [];
+          const votes = this.state.votes;
           votes.map(vote => {
             // console.log("vote", vote)
-            const voteFeatureID = JSON.stringify(vote.feature_id)
+            const voteFeatureID = JSON.stringify(vote.feature_id);
             // console.log("vote.feature_id", typeof voteFeatureID)
             // console.log("feature.id", typeof feature.id)
 
             if (voteFeatureID === feature.id) {
-              votesFilteredArr.push(vote)
+              votesFilteredArr.push(vote);
               // console.log("yes")
             }
-          // console.log("getAllFeatures votesFilteredArr", votesFilteredArr)
-          const length = votesFilteredArr.length
-          feature.votes = length
-          })
-        })
+            // console.log("getAllFeatures votesFilteredArr", votesFilteredArr)
+            const length = votesFilteredArr.length;
+            feature.votes = length;
+          });
+        });
         // console.log("getAllFeatures features", features)
         this.setState({ unfilteredFeatureList: features });
-        this.sortByVotes();
+        // this.sortByVotes();
       })
       .catch(err => console.log(`getAllFeatures err: ${err}`));
   }
 
-  editFeature(
-    id,
-    name,
-    // author,
-    purpose,
-    userStory,
-    acceptanceCriteria,
-    businessValue,
-    wireframes,
-    attachments,
-    votes,
-    dateLastUpdated,
-    productName,
-    userEmail
-  ) {
-    // console.log("editFeature id", id);
-    // console.log("editFeature name", name);
-    // console.log("editFeature author", author);
-    // console.log("editFeature purpose", purpose);
-    // console.log("editFeature userStory", userStory);
-    // console.log("editFeature acceptanceCriteria", acceptanceCriteria);
-    // console.log("editFeature businessValue", businessValue);
-    // console.log("editFeature wireframes", wireframes);
-    // console.log("editFeature attachments", attachments);
-    // console.log("editFeature votes", votes);
+  getAllProductFeatures(name) {
+    // console.log("getAllProductFeatures name", name);
     axios({
-      url: `http://localhost:8080/features/${id}`,
-      method: "PUT",
-      data: {
-        name: name,
-        // author: author,
-        purpose: purpose,
-        user_story: userStory,
-        acceptance_criteria: acceptanceCriteria,
-        business_value: businessValue,
-        wireframes: wireframes,
-        attachments: attachments,
-        votes: votes,
-        date_last_updated: dateLastUpdated,
-        product_name: productName,
-        user_email: userEmail
-      }
+      url: `http://localhost:8080/products/${name}/features`
     })
       .then(response => {
-        this.getAllFeatures();
+        this.setState({ productFeatures: response.data });
+        // console.log("getAllProductFeatures resp", response.data);
       })
-      .catch(err => console.log(`editFeature err: ${err}`));
+      .catch(err => console.log(`getAllProductFeatures err: ${err}`));
   }
 
-// ----------------------------AUTH----------------------------
+  addFeature(data) {
+    axios({
+      url: "http://localhost:8080/features",
+      method: "POST",
+      data: data
+    })
+      .then(response => {
+        this.getAllActivities();
+        this.getAllFeatures();
+      })
+      .catch(err => console.log(`addFeature err: ${err}`));
+  }
+
+  // ----------------------------AUTH----------------------------
 
   login(email, password) {
     axios({
@@ -218,6 +200,9 @@ class App extends Component {
         TokenService.save(response.data.token);
         // console.log("login response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
+        // this.getAllProducts("login");
+        // this.getAllVotes("login");
+        // this.getAllFeatures("login");
       })
       .catch(err => console.log("login err", err));
   }
@@ -233,6 +218,9 @@ class App extends Component {
         TokenService.save(response.data.token);
         // console.log("register response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
+        // this.getAllProducts("register");
+        // this.getAllVotes("register");
+        // this.getAllFeatures("register");
       })
       .catch(err => console.log("register err", err));
   }
@@ -240,71 +228,78 @@ class App extends Component {
   logout() {
     TokenService.destroy();
     this.setState({
+      // products: [],
+      // unfilteredFeatureList: [],
       isLoggedIn: false,
-      user: [],
-      unfilteredFeatureList: [],
-      filteredFeatureList: [],
-      count: ""
+      user: []
     });
     // console.log("logged out user?", this.state.user);
   }
 
-  // seeUserFollows(userID){
-  //   axios({
-  //     url: `http://localhost:8080/activities/follows/${userID}`
-  //   })
-  //   .then(response => {
-  //     console.log("seeUserFollows response", response.data)
-  //     const data = response.data
-  //     data.map(follow => {
-  //       this.getFeature(follow.id)
-  //     })
-  //   })
-  //     .catch(err => console.log(`seeUserFollows err: ${err}`));
-  // }
-
-
   componentDidMount() {
-    this.getVotes()
     this.getAllProducts();
-  }
-
-  componentDidUpdate(prevProps, prevState){
-    if (prevState.votes.length !== this.state.votes.length) {
-      this.getAllFeatures()
-    }
+    this.getAllActivities();
+    this.getAllFeatures();
   }
 
   render() {
     if (this.state.isLoggedIn === true) {
       return (
         <div>
-          <Navbar>
-            <Navbar.Group align={Alignment.LEFT}>
-              <Navbar.Heading>Blueprint</Navbar.Heading>
-              <Navbar.Divider />
-              <Button className="bp3-minimal" icon="home" text="Home" />
-              <Button className="bp3-minimal" icon="document" text="Files" />
-            </Navbar.Group>
-          </Navbar>
-          <Home
-            logout={this.logout}
-            // getVotes={this.getVotes}
-            getAllFeatures={this.getAllFeatures}
-            editFeature={this.editFeature}
-            sortByVotes={this.sortByVotes}
-            sortByDate={this.sortByDate}
-            addVote={this.addVote}  
-            deleteVote={this.deleteVote}                                                                            
-            // getVotes={this.getVotes}
-            // seeUserFollows={this.seeUserFollows}
-            products={this.state.products}
-            // votes={this.state.votes}            
-            unfilteredFeatureList={this.state.unfilteredFeatureList}
-            filteredFeatureList={this.state.filteredFeatureList}
-            user={this.state.user}
-            votes={this.state.votes}
+          <NavBar
+            addFeature={this.addFeature}
+            products={this.products}
+            user={this.user}
           />
+          <Router>
+            <Switch>
+              <Route
+                exact
+                path="/product/:name"
+                render={props => (
+                  <ProductFeatures
+                    {...props}
+                    productFeatures={this.state.productFeatures}
+                    getAllProductFeatures={this.getAllProductFeatures}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/product"
+                render={props => (
+                  <ProductList
+                    products={this.state.products}
+                    unfilteredFeatureList={this.state.unfilteredFeatureList}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/home"
+                render={props => (
+                  <Home
+                    {...props}
+                    logout={this.logout}
+                    // getAllVotes={this.getAllVotes}
+                    getAllFeatures={this.getAllFeatures}
+                    addFeature={this.addFeature}
+                    getAllActivities={this.getAllActivities}
+                    newActivity={this.newActivity}
+                    deleteActivity={this.deleteActivity}
+                    // getAllVotes={this.getAllVotes}
+                    // seeUserFollows={this.seeUserFollows}
+                    products={this.state.products}
+                    unfilteredFeatureList={this.state.unfilteredFeatureList}
+                    user={this.state.user}
+                    votes={this.state.votes}
+                    follows={this.state.follows}
+                  />
+                )}
+              />
+              <Route path="/" render={() => <Redirect to="/home" />} />
+            </Switch>
+          </Router>
         </div>
       );
     } else if (this.state.isLoggedIn === false) {
@@ -318,3 +313,52 @@ class App extends Component {
 }
 
 export default App;
+
+// editFeature(
+//   id,
+//   name,
+//   // author,
+//   purpose,
+//   userStory,
+//   acceptanceCriteria,
+//   businessValue,
+//   wireframes,
+//   attachments,
+//   votes,
+//   dateLastUpdated,
+//   productName,
+//   userEmail
+// ) {
+//   // console.log("editFeature id", id);
+//   // console.log("editFeature name", name);
+//   // console.log("editFeature author", author);
+//   // console.log("editFeature purpose", purpose);
+//   // console.log("editFeature userStory", userStory);
+//   // console.log("editFeature acceptanceCriteria", acceptanceCriteria);
+//   // console.log("editFeature businessValue", businessValue);
+//   // console.log("editFeature wireframes", wireframes);
+//   // console.log("editFeature attachments", attachments);
+//   // console.log("editFeature votes", votes);
+//   axios({
+//     url: `http://localhost:8080/features/${id}`,
+//     method: "PUT",
+//     data: {
+//       name: name,
+//       // author: author,
+//       purpose: purpose,
+//       user_story: userStory,
+//       acceptance_criteria: acceptanceCriteria,
+//       business_value: businessValue,
+//       wireframes: wireframes,
+//       attachments: attachments,
+//       votes: votes,
+//       date_last_updated: dateLastUpdated,
+//       product_name: productName,
+//       user_email: userEmail
+//     }
+//   })
+//     .then(response => {
+//       this.getAllFeatures();
+//     })
+//     .catch(err => console.log(`editFeature err: ${err}`));
+// }
