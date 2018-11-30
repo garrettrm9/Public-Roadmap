@@ -1,11 +1,40 @@
 const db = require("../db/index.js");
 const feature = {};
 
+const featuresWithCompanies = []
+
+const getCompanyName = function(featureRequest){
+    // console.log('getCompanyName featureRequest', featureRequest)
+    const product_name = featureRequest.product_name 
+    db
+      .one('SELECT company_name FROM products WHERE name = $1', [
+          product_name
+        ])
+      .then(company => {
+        // console.log('getCompanyName company', company)
+        featureRequest.company_name = company.company_name
+        // console.log('getCompanyName featureRequest', featureRequest)
+        // next()
+        return featureRequest
+        // featuresWithCompanies.push(featureRequest)
+      })
+      .catch(error => {
+        console.log("error from getCompanyName feature model", error)
+      })
+  }
+
+
 feature.getAllFeatures = (req, res, next) => {
   db
     .manyOrNone("SELECT * FROM features")
     .then(features => {
       res.locals.features = features;
+      // const newFeatures = features.map(feature => {
+      //   getCompanyName(feature)
+      // })
+      // console.log("getAllFeatures newFeatures", newFeatures)
+      // // console.log("getAllFeatures featuresWithCompanies", featuresWithCompanies)
+      // res.locals.features = newFeatures;
       next();
     })
     .catch(error => {
@@ -59,10 +88,10 @@ feature.newFeature = (req, res, next) => {
 feature.editFeature = function(req, res, next) {
   db
     .one(
-      "UPDATE features SET name=$1, author=$2, purpose=$3, user_story=$4, acceptance_criteria=$5, business_value=$6, wireframes=$7, attachments=$8, votes=$9, date_last_updated=$10 WHERE id=$11 RETURNING *",
+      "UPDATE features SET name=$1, purpose=$2, user_story=$3, acceptance_criteria=$4, business_value=$5, wireframes=$6, attachments=$7, votes=$8, date_last_updated=$9, product_name=$10, user_email=$11 WHERE id=$12 RETURNING *",
       [
         req.body.name,
-        req.body.author,
+        // req.body.author,
         req.body.purpose,
         req.body.user_story,
         req.body.acceptance_criteria,
@@ -71,11 +100,13 @@ feature.editFeature = function(req, res, next) {
         req.body.attachments,
         req.body.votes,
         req.body.date_last_updated,
+        req.body.product_name,
+        req.body.user_email,
         req.params.feature_id
       ]
     )
-    .then(user => {
-      res.locals.user = user;
+    .then(feature => {
+      res.locals.feature = feature;
       next();
     })
     .catch(err => {

@@ -1,103 +1,102 @@
 import React, { Component } from "react";
-import FilteredFeatureList from "../features/filteredFeatureList.js";
-
-import {
-  // Alignment,
-  Button,
-  Classes
-  // H5,
-  // Navbar,
-  // NavbarDivider,
-  // NavbarGroup,
-  // NavbarHeading,
-  // Switch,
-} from "@blueprintjs/core";
+import FilteredFeatureList from "../features/filteredFeatureList";
+import { Button, Classes } from "@blueprintjs/core";
+import { Link } from "react-router-dom";
 
 export default class Home extends Component {
-  // constructor(props) {
-  //   super(props);
-  // this.state = {
-  //   filteredFeatureList: [],
-  //   newVoteCheck: false
-  // };
-  // this.sortByDate = this.sortByDate.bind(this);
-  // this.sortByVotes = this.sortByVotes.bind(this);
-  // this.checkNewVotes = this.checkNewVotes.bind(this);
-  // }
-
-  // checkNewVotes(value) {
-  //   // console.log("checkNewVotes value", value);
-  //   this.setState({ newVoteCheck: value });
-  // }
-
-  // sortByDate() {
-  //   const newArray = this.props.filteredFeatureList.sort(function(a, b) {
-  //     const dateA = new Date(a.date_created);
-  //     const dateB = new Date(b.date_created);
-  //     return dateB - dateA;
-  //   });
-  //   // console.log("sortByDate newArray", newArray);
-  //   this.setState({ filteredFeatureList: newArray });
-  // }
-
-  // sortByVotes() {
-  //   const newArray = this.props.unfilteredFeatureList.sort(function(a, b) {
-  //     return b.votes - a.votes;
-  //   });
-  //   // console.log("sortByVotes newArray", newArray);
-  //   this.setState({ filteredFeatureList: newArray });
-  // }
-
-  // checkForVoteUpdates(oldArr, newArr) {
-  //   const oldArray = oldArr.sort(function(a, b) {
-  //     return b.votes - a.votes;
-  //   });
-
-  //   const newArray = newArr.sort(function(a, b) {
-  //     return b.votes - a.votes;
-  //   });
-
-  //   const oldArrayVotes = [];
-
-  //   oldArray.map(feature => {
-  //     oldArrayVotes.push(feature.votes);
-  //   });
-
-  //   const newArrayVotes = [];
-
-  //   newArray.map(feature => {
-  //     newArrayVotes.push(feature.votes);
-  //   });
-
-  //   const checkVotes = function() {
-  //     for (var i = 0; i < oldArrayVotes; i++) {
-  //       if (oldArrayVotes[i] !== newArrayVotes[i]) {
-  //       }
-  //     }
-  //   };
-  // }
-
-  componentDidMount() {
-    this.props.getAllFeatures();
+  constructor(props) {
+    super(props);
+    this.state = {
+      sortByMarker: "votes",
+      filteredResults: []
+    };
+    this.sortFeatures = this.sortFeatures.bind(this);
+    this.sortByVotes = this.sortByVotes.bind(this);
+    this.sortByDate = this.sortByDate.bind(this);
+    this.sortByUserFollow = this.sortByUserFollow.bind(this);
+    this.handleVotesClicked = this.handleVotesClicked.bind(this);
+    this.handleDateClicked = this.handleDateClicked.bind(this);
+    this.handleFollowClicked = this.handleFollowClicked.bind(this);
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   // console.log("update prevState", prevState.newVoteCheck);
-  //   // console.log("update state", this.state.newVoteCheck);
-  //   if (
-  //     prevProps.unfilteredFeatureList.length !==
-  //     this.props.unfilteredFeatureList.length
-  //   ) {
-  //     this.sortByVotes();
-  //   }
-  //   // else if (
-  //   //   prevState.newVoteCheck === false &&
-  //   //   this.state.newVoteCheck === true
-  //   // ) {
-  //   //   this.checkNewVotes(false);
-  //   //   this.props.getAllFeatures();
-  //   // }
-  // }
+  sortByVotes() {
+    const newArray = this.props.unfilteredFeatureList.sort(function(a, b) {
+      return b.votes - a.votes;
+    });
+    // console.log("sortByVotes newArray", newArray);
+    this.setState({ filteredResults: newArray });
+  }
+
+  sortByDate() {
+    const newArray = this.props.unfilteredFeatureList.sort(function(a, b) {
+      const dateA = new Date(a.date_last_updated);
+      const dateB = new Date(b.date_last_updated);
+      return dateB - dateA;
+    });
+    // console.log("sortByDate newArray", newArray);
+    this.setState({ filteredResults: newArray });
+  }
+
+  sortByUserFollow() {
+    const features = this.props.unfilteredFeatureList;
+    const follows = this.props.follows;
+    // console.log("sortByUserFollow features", features);
+    // console.log("sortByUserFollow follows", follows);
+    const featureIDs = [];
+    follows.map(follow => {
+      if (follow.user_email === this.props.user.email) {
+        featureIDs.push(follow.feature_id);
+      }
+    });
+    // console.log("sortByUserFollow featureIDs", featureIDs);
+    const filteredFeatures = [];
+    features.map(feature => {
+      featureIDs.map(featureID => {
+        if (feature.id === JSON.stringify(featureID)) {
+          filteredFeatures.push(feature);
+        }
+      });
+    });
+    // console.log("sortByUserFollow filteredFeatures", filteredFeatures);
+    this.setState({ filteredResults: filteredFeatures });
+  }
+
+  sortFeatures() {
+    if (this.state.sortByMarker === "votes") {
+      this.sortByVotes();
+    } else if (this.state.sortByMarker === "date") {
+      this.sortByDate();
+    } else if (this.state.sortByMarker === "follow") {
+      this.sortByUserFollow();
+    }
+  }
+
+  handleDateClicked(e) {
+    e.preventDefault();
+    this.setState({ sortByMarker: "date" });
+  }
+
+  handleVotesClicked(e) {
+    e.preventDefault();
+    this.setState({ sortByMarker: "votes" });
+  }
+
+  handleFollowClicked(e) {
+    e.preventDefault();
+    this.setState({ sortByMarker: "follow" });
+  }
+
+  componentDidMount() {
+    this.sortFeatures();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.sortByMarker !== prevState.sortByMarker) {
+      this.sortFeatures();
+    } else {
+      console.log("no update");
+    }
+  }
 
   render() {
     // const features = this.props.features;
@@ -105,13 +104,33 @@ export default class Home extends Component {
       <div>
         <h3 className={Classes.HEADING}>Browse Feature Requests</h3>
         <Button icon="log-out" text="Logout" onClick={this.props.logout} />
+        <div className="buttonDivider" />
+        <Button onClick={this.handleDateClicked}>Sort by date!</Button>
+        <Button onClick={this.handleVotesClicked}>Sort by votes!</Button>
+        <Button onClick={this.handleFollowClicked}>
+          See your followed features!
+        </Button>
+        <br />
+        <br />
+        <Link to="/product">
+          <Button> Product page</Button>
+        </Link>
         <FilteredFeatureList
           checkNewVotes={this.checkNewVotes}
           getAllFeatures={this.props.getAllFeatures}
           editFeature={this.props.editFeature}
-          filteredFeatureList={this.props.filteredFeatureList}
-          sortByVotes={this.props.sortByVotes}
-          sortByDate={this.props.sortByDate}
+          getAllActivities={this.props.getAllActivities}
+          newActivity={this.props.newActivity}
+          deleteActivity={this.props.deleteActivity}
+          // sortByVotes={this.props.sortByVotes}
+          // sortByDate={this.props.sortByDate}
+          // getVotes={this.props.getVotes}
+          // seeUserFollows={this.props.seeUserFollows}
+          votes={this.props.votes}
+          follows={this.props.follows}
+          filteredResults={this.state.filteredResults}
+          products={this.props.products}
+          user={this.props.user}
           // votes={this.props.votes}
           // getVotes={this.props.getVotes}
         />
