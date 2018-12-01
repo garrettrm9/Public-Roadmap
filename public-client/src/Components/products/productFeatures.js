@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@blueprintjs/core";
+import FeatureCard from "../features/featureCard";
 
 export default class ProductFeatures extends Component {
   constructor(props) {
@@ -13,9 +14,16 @@ export default class ProductFeatures extends Component {
 
   renderFeatures(feature, index) {
     return (
-      <div key={index}>
-        <p>Feature name: {feature.name}</p>
-      </div>
+      <FeatureCard
+        key={index}
+        feature={feature}
+        products={this.props.products}
+        votes={this.props.votes}
+        follows={this.props.follows}
+        user={this.props.user}
+        newActivity={this.props.newActivity}
+        deleteActivity={this.props.deleteActivity}
+      />
     );
   }
 
@@ -33,7 +41,10 @@ export default class ProductFeatures extends Component {
       productFeatures = this.props.productFeatures.map(this.renderFeatures);
     }
     return (
-      <div>
+      <div className="featureCardsContainer">
+        <Link to="/home">
+          <Button>Home</Button>
+        </Link>
         <Link to="/product">
           <Button> Product page</Button>
         </Link>

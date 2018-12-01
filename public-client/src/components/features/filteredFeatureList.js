@@ -16,16 +16,8 @@ export default class FilteredFeatureList extends Component {
         votes={this.props.votes}
         follows={this.props.follows}
         user={this.props.user}
-        getAllFeatures={this.props.getAllFeatures}
-        getAllActivities={this.props.getAllActivities}
         newActivity={this.props.newActivity}
         deleteActivity={this.props.deleteActivity}
-        // getAllFeatures={this.props.getAllFeatures}
-        checkNewVotes={this.props.checkNewVotes}
-        // editFeature={this.props.editFeature}
-        sortByVotes={this.props.sortByVotes}
-        // getVotes={this.props.getVotes}
-        // votes={this.props.votes}
       />
     );
   }

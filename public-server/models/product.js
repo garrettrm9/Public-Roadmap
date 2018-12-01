@@ -29,8 +29,8 @@ product.getOneProduct = (req, res, next) => {
 
 product.getAllFeatures = (req, res, next) => {
   db
-    .manyOrNone("SELECT * from features WHERE product_id=$1", [
-      req.params.product_id
+    .manyOrNone("SELECT * from features WHERE product_name=$1", [
+      req.params.product_name
     ])
     .then(features => {
       res.locals.features = features;

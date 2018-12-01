@@ -39,7 +39,7 @@ CREATE TABLE features (
   business_value VARCHAR(255),
   wireframes VARCHAR(255),
   attachments VARCHAR(255),
-  votes INTEGER,
+  -- votes INTEGER,
   date_last_updated DATE,
   product_name VARCHAR(255),
   FOREIGN KEY (product_name) REFERENCES products(name),
@@ -47,22 +47,33 @@ CREATE TABLE features (
   FOREIGN KEY (user_email) REFERENCES users(email)
 );
 
-DROP TABLE IF EXISTS votes;
+DROP TABLE IF EXISTS activities CASCADE;
 
-CREATE TABLE votes (
+CREATE TABLE activities (
   id BIGSERIAL PRIMARY KEY,
+  type VARCHAR(255),
   feature_id INTEGER,
   FOREIGN KEY (feature_id) REFERENCES features(id),
   user_email VARCHAR(255),
   FOREIGN KEY (user_email) REFERENCES users(email)
-);
+)
 
-DROP TABLE IF EXISTS follows;
+-- DROP TABLE IF EXISTS votes;
 
-CREATE TABLE follows (
-  id BIGSERIAL PRIMARY KEY,
-  feature_id INTEGER,
-  FOREIGN KEY(feature_id) REFERENCES features(id),
-  user_email VARCHAR(255),
-  FOREIGN KEY (user_email) REFERENCES users(email)
-);
+-- CREATE TABLE votes (
+--   id BIGSERIAL PRIMARY KEY,
+--   feature_id INTEGER,
+--   FOREIGN KEY (feature_id) REFERENCES features(id),
+--   user_email VARCHAR(255),
+--   FOREIGN KEY (user_email) REFERENCES users(email)
+-- );
+
+-- DROP TABLE IF EXISTS follows;
+
+-- CREATE TABLE follows (
+--   id BIGSERIAL PRIMARY KEY,
+--   feature_id INTEGER,
+--   FOREIGN KEY(feature_id) REFERENCES features(id),
+--   user_email VARCHAR(255),
+--   FOREIGN KEY (user_email) REFERENCES users(email)
+-- );
