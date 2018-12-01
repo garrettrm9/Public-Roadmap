@@ -1,9 +1,22 @@
 const db = require("../db/index.js");
 const activity = {};
 
+activity.getAllActivities = (req, res, next) => {
+  db
+    .manyOrNone("SELECT * FROM activities")
+    .then(activities => {
+      res.locals.activities = activities;
+      next();
+    })
+    .catch(error => {
+      console.log("error from getAllActivities model", error);
+      next(error);
+    });
+};
+
 activity.getAllVotes = (req, res, next) => {
   db
-    .manyOrNone("SELECT * FROM votes")
+    .manyOrNone("SELECT * FROM activities WHERE type=$1", ["vote"])
     .then(votes => {
       res.locals.votes = votes;
       next();
@@ -14,37 +27,40 @@ activity.getAllVotes = (req, res, next) => {
     });
 };
 
-activity.addVote = (req, res, next) => {
+activity.newActivity = (req, res, next) => {
   db
-    .one("INSERT INTO votes (feature_id, user_email) VALUES ($1, $2) RETURNING *", [
-      req.params.id,
-      req.body.user_email
-    ])
+    .one(
+      "INSERT INTO activities (type, feature_id, user_email) VALUES ($1, $2, $3) RETURNING *",
+      [req.body.type, req.params.id, req.body.user_email]
+    )
     .then(vote => {
       res.locals.vote = vote;
       next();
     })
     .catch(error => {
-      console.log("error from addVote model", error);
+      console.log("error from newActivity model", error);
       next(error);
     });
 };
 
-activity.deleteVote = (req, res, next) => {
+activity.deleteActivity = (req, res, next) => {
   db
-    .none("DELETE from votes WHERE feature_id=$1 AND user_email=$2", [req.params.id, req.body.user_email])
+    .none(
+      "DELETE from activities WHERE type=$1 AND feature_id=$2 AND user_email=$3",
+      [req.body.type, req.params.id, req.body.user_email]
+    )
     .then(() => {
       next();
     })
     .catch(error => {
-      console.log("error from deleteVote model", error);
+      console.log("error from deleteActivity model", error);
       next(error);
     });
 };
 
 activity.getAllFollows = (req, res, next) => {
   db
-    .manyOrNone("SELECT * FROM follows")
+    .manyOrNone("SELECT * FROM activities WHERE type=$1", ["follow"])
     .then(follows => {
       res.locals.follows = follows;
       next();
@@ -55,43 +71,18 @@ activity.getAllFollows = (req, res, next) => {
     });
 };
 
-activity.getFollows = (req, res, next) => {
+activity.getUserFollows = (req, res, next) => {
   db
-    .manyOrNone("SELECT * FROM follows WHERE user_id = $1", [req.params.id])
+    .manyOrNone("SELECT * FROM activities WHERE type=$1 AND user_email = $2", [
+      "follow",
+      req.params.email
+    ])
     .then(follows => {
       res.locals.follows = follows;
-      next()
-    })
-    .catch(error => {
-      console.log("error from getFollows model", error)
-    })
-}
-
-activity.addFollow = (req, res, next) => {
-  db
-    .one(
-      "INSERT INTO follows (feature_id, user_id) VALUES ($1, $2) RETURNING *",
-      [req.body.feature_id, req.body.user_id]
-    )
-    .then(vote => {
-      res.locals.vote = vote;
       next();
     })
     .catch(error => {
-      console.log("error from addFollow model", error);
-      next(error);
-    });
-};
-
-activity.deleteFollow = (req, res, next) => {
-  db
-    .none("DELETE from follows WHERE id=$1", [req.params.id])
-    .then(() => {
-      next();
-    })
-    .catch(error => {
-      console.log("error from deleteFollow model", error);
-      next(error);
+      console.log("error from getFollows model", error);
     });
 };
 

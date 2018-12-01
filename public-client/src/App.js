@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import {
-  Alignment,
-  Button,
-  // Classes,
-  // H5,
-  // Navbar,
-  Icon,
-  // NavbarDivider,
-  // NavbarGroup,
-  // NavbarHeading,
-  // Switch,
-  // Overlay,
-  Dialog
-} from "@blueprintjs/core";
+// import {
+//   // Alignment,
+//   Button,
+//   // Classes,
+//   // H5,
+//   // Navbar,
+//   Icon,
+//   // NavbarDivider,
+//   // NavbarGroup,
+//   // NavbarHeading,
+//   // Switch,
+//   // Overlay,
+//   Dialog
+// } from "@blueprintjs/core";
 import {
   BrowserRouter as Router,
   Switch,
@@ -248,8 +248,8 @@ class App extends Component {
         <div>
           <NavBar
             addFeature={this.addFeature}
-            products={this.products}
-            user={this.user}
+            products={this.state.products}
+            user={this.state.user}
           />
           <Router>
             <Switch>
@@ -261,6 +261,12 @@ class App extends Component {
                     {...props}
                     productFeatures={this.state.productFeatures}
                     getAllProductFeatures={this.getAllProductFeatures}
+                    products={this.state.products}
+                    votes={this.state.votes}
+                    follows={this.state.follows}
+                    user={this.state.user}
+                    newActivity={this.newActivity}
+                    deleteActivity={this.deleteActivity}
                   />
                 )}
               />

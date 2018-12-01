@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, TextArea, Label, Icon } from "@blueprintjs/core";
+import { Button, TextArea, Label } from "@blueprintjs/core";
 
 class AddFeatureForm extends Component {
   constructor(props) {

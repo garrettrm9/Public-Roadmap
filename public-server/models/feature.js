@@ -1,28 +1,25 @@
 const db = require("../db/index.js");
 const feature = {};
 
-const featuresWithCompanies = []
+const featuresWithCompanies = [];
 
-const getCompanyName = function(featureRequest){
-    // console.log('getCompanyName featureRequest', featureRequest)
-    const product_name = featureRequest.product_name 
-    db
-      .one('SELECT company_name FROM products WHERE name = $1', [
-          product_name
-        ])
-      .then(company => {
-        // console.log('getCompanyName company', company)
-        featureRequest.company_name = company.company_name
-        // console.log('getCompanyName featureRequest', featureRequest)
-        // next()
-        return featureRequest
-        // featuresWithCompanies.push(featureRequest)
-      })
-      .catch(error => {
-        console.log("error from getCompanyName feature model", error)
-      })
-  }
-
+const getCompanyName = function(featureRequest) {
+  // console.log('getCompanyName featureRequest', featureRequest)
+  const product_name = featureRequest.product_name;
+  db
+    .one("SELECT company_name FROM products WHERE name = $1", [product_name])
+    .then(company => {
+      // console.log('getCompanyName company', company)
+      featureRequest.company_name = company.company_name;
+      // console.log('getCompanyName featureRequest', featureRequest)
+      // next()
+      return featureRequest;
+      // featuresWithCompanies.push(featureRequest)
+    })
+    .catch(error => {
+      console.log("error from getCompanyName feature model", error);
+    });
+};
 
 feature.getAllFeatures = (req, res, next) => {
   db
@@ -61,18 +58,18 @@ feature.getUserFeatures = (req, res, next) => {
 feature.newFeature = (req, res, next) => {
   db
     .one(
-      "INSERT INTO features (name, author, purpose, user_story, acceptance_criteria, business_value, wireframes, attachments, votes, date_last_updated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+      "INSERT INTO features (name, purpose, user_story, acceptance_criteria, business_value, wireframes, attachments, date_last_updated, product_name, user_email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
       [
         req.body.name,
-        req.body.author,
         req.body.purpose,
         req.body.user_story,
         req.body.acceptance_criteria,
         req.body.business_value,
         req.body.wireframes,
         req.body.attachments,
-        req.body.votes,
-        req.body.date_last_updated
+        req.body.date_last_updated,
+        req.body.product_name,
+        req.body.user_email
       ]
     )
     .then(id => {

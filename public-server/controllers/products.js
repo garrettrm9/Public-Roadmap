@@ -11,7 +11,7 @@ router.get("/:product_id", product.getOneProduct, (req, res) => {
   res.json(product);
 });
 
-router.get("/:product_id/features", product.getAllFeatures, (req, res) => {
+router.get("/:product_name/features", product.getAllFeatures, (req, res) => {
   const { features } = res.locals;
   res.json(features);
 });
