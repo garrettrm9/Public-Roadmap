@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AddFeatureForm from "./addFeatureForm";
-import { Alignment, Button, Dialog, Icon, Navbar } from "@blueprintjs/core";
+import Search from "./search";
+import { Alignment, Button, Dialog, Navbar } from "@blueprintjs/core";
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -41,10 +42,16 @@ export default class NavBar extends Component {
           </div>
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
-          <div className="bp3-input-group">
-            <Icon icon="search" />
-            <input className="bp3-input" type="search" placeholder="Search" />
-          </div>
+          <Search
+            user={this.props.user}
+            products={this.props.products}
+            companies={this.props.companies}
+            votes={this.props.votes}
+            follows={this.props.follows}
+            unfilteredFeatureList={this.props.unfilteredFeatureList}
+            getInfo={this.props.getInfo}
+            searchResults={this.props.searchResults}
+          />
         </Navbar.Group>
       </Navbar>
     );

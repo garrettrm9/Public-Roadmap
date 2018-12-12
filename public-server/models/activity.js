@@ -14,15 +14,45 @@ activity.getAllActivities = (req, res, next) => {
     });
 };
 
-activity.getAllVotes = (req, res, next) => {
+activity.getAllUserActivities = (req, res, next) => {
   db
-    .manyOrNone("SELECT * FROM activities WHERE type=$1", ["vote"])
-    .then(votes => {
-      res.locals.votes = votes;
+    .manyOrNone("SELECT * FROM activities where user_email=$1", [req.params.id])
+    .then(activities => {
+      res.locals.activities = activities;
       next();
     })
     .catch(error => {
-      console.log("error from getAllVotes model", error);
+      console.log("error from getAllUserActivities model", error);
+      next(error);
+    });
+};
+
+// activity.getAllVotes = (req, res, next) => {
+//   db
+//     .manyOrNone("SELECT * FROM activities WHERE type=$1", ["vote"])
+//     .then(votes => {
+//       res.locals.votes = votes;
+//       next();
+//     })
+//     .catch(error => {
+//       console.log("error from getAllVotes model", error);
+//       next(error);
+//     });
+// };
+
+activity.getVoteCount = (req, res, next) => {
+  db
+    .manyOrNone(
+      "SELECT COUNT(*) from activities where type=$1 AND feature_id=$2",
+      ["vote", req.params.id]
+    )
+    .then(votes => {
+      // console.log("getVoteCount resp", votes[0].count);
+      res.locals.votes = votes[0].count;
+      next();
+    })
+    .catch(error => {
+      console.log("error from getVoteCount model", error);
       next(error);
     });
 };
@@ -58,32 +88,46 @@ activity.deleteActivity = (req, res, next) => {
     });
 };
 
-activity.getAllFollows = (req, res, next) => {
-  db
-    .manyOrNone("SELECT * FROM activities WHERE type=$1", ["follow"])
-    .then(follows => {
-      res.locals.follows = follows;
-      next();
-    })
-    .catch(error => {
-      console.log("error from getAllFollows model", error);
-      next(error);
-    });
-};
+// activity.getAllFollows = (req, res, next) => {
+//   db
+//     .manyOrNone("SELECT * FROM activities WHERE type=$1", ["follow"])
+//     .then(follows => {
+//       res.locals.follows = follows;
+//       next();
+//     })
+//     .catch(error => {
+//       console.log("error from getAllFollows model", error);
+//       next(error);
+//     });
+// };
 
-activity.getUserFollows = (req, res, next) => {
-  db
-    .manyOrNone("SELECT * FROM activities WHERE type=$1 AND user_email = $2", [
-      "follow",
-      req.params.email
-    ])
-    .then(follows => {
-      res.locals.follows = follows;
-      next();
-    })
-    .catch(error => {
-      console.log("error from getFollows model", error);
-    });
-};
+// activity.getUserFollows = (req, res, next) => {
+//   db
+//     .manyOrNone("SELECT * FROM activities WHERE type=$1 AND user_email = $2", [
+//       "follow",
+//       req.params.email
+//     ])
+//     .then(follows => {
+//       res.locals.follows = follows;
+//       next();
+//     })
+//     .catch(error => {
+//       console.log("error from getFollows model", error);
+//     });
+// };
+
+// activity.userSearch = (req, res, next) => {
+//   db
+//     .manyOrNone(`SELECT * from ${req.params.category} WHERE name=$1`, [
+//       req.params.name
+//     ])
+//     .then(results => {
+//       res.locals.results = results;
+//       next();
+//     })
+//     .catch(error => {
+//       console.log("error from userSearch model", error);
+//     });
+// };
 
 module.exports = activity;

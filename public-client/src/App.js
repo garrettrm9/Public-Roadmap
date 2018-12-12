@@ -33,14 +33,19 @@ class App extends Component {
     super(props);
     this.state = {
       products: [],
+      companies: [],
       unfilteredFeatureList: [],
       isLoggedIn: false,
       user: [],
       votes: [],
       follows: [],
       productFeatures: []
+      // searchResults: []
     };
+    this.getAllCompanies = this.getAllCompanies.bind(this);
     this.getAllActivities = this.getAllActivities.bind(this);
+    this.getVoteCount = this.getVoteCount.bind(this);
+    this.getUserActivities = this.getUserActivities.bind(this);
     this.getAllProductFeatures = this.getAllProductFeatures.bind(this);
     this.getAllProducts = this.getAllProducts.bind(this);
     this.getAllFeatures = this.getAllFeatures.bind(this);
@@ -51,6 +56,19 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.register = this.register.bind(this);
     this.sortActivities = this.sortActivities.bind(this);
+    // this.getInfo = this.getInfo.bind(this);
+  }
+
+  // ----------------------------COMPANIES----------------------------
+
+  getAllCompanies() {
+    axios({
+      url: "http://localhost:8080/companies"
+    })
+      .then(response => {
+        this.setState({ companies: response.data });
+      })
+      .catch(err => console.log(`getAllCompanies err: ${err}`));
   }
 
   // ----------------------------PRODUCTS----------------------------
@@ -79,6 +97,8 @@ class App extends Component {
       }
     });
     this.setState({ votes: votes, follows: follows });
+    // console.log("sortActivities state votes", this.state.votes);
+    // console.log("sortActivities state follows", this.state.follows);
   }
 
   getAllActivities() {
@@ -103,7 +123,6 @@ class App extends Component {
       }
     })
       .then(response => {
-        // this.getAllVotes();
         this.getAllActivities();
         this.getAllFeatures();
       })
@@ -120,11 +139,39 @@ class App extends Component {
       }
     })
       .then(response => {
-        // this.getAllVotes();
         this.getAllActivities();
         this.getAllFeatures();
       })
       .catch(err => console.log(`deleteActivity err: ${err}`));
+  }
+
+  getVoteCount(features) {
+    // console.log("getVoteCount features", features);
+    const unfilteredFeatureList = features;
+    unfilteredFeatureList.map(feature => {
+      axios({
+        url: `http://localhost:8080/activities/${feature.id}/votes`
+      })
+        .then(response => {
+          // console.log("getVoteCount resp", response.data);
+          feature.votes = response.data;
+        })
+        .catch(err => console.log(`getVoteCount err: ${err}`));
+    });
+    // console.log("getVoteCount post axios arr", unfilteredFeatureList);
+    this.setState({ unfilteredFeatureList: unfilteredFeatureList });
+  }
+
+  getUserActivities() {
+    // console.log("getUserActivities user", this.state.user);
+    axios({
+      url: `http://localhost:8080/activities/${this.state.user.email}`
+    })
+      .then(response => {
+        // console.log("getUserActivities resp", response.data);
+        this.sortActivities(response.data);
+      })
+      .catch(err => console.log(`getUserActivities err: ${err}`));
   }
 
   // ----------------------------FEATURES----------------------------
@@ -135,28 +182,29 @@ class App extends Component {
       url: "http://localhost:8080/features"
     })
       .then(response => {
-        const features = response.data;
-        features.map(feature => {
-          // console.log("feature", feature)
-          const votesFilteredArr = [];
-          const votes = this.state.votes;
-          votes.map(vote => {
-            // console.log("vote", vote)
-            const voteFeatureID = JSON.stringify(vote.feature_id);
-            // console.log("vote.feature_id", typeof voteFeatureID)
-            // console.log("feature.id", typeof feature.id)
+        // const features = response.data;
+        // features.map(feature => {
+        //   // console.log("feature", feature)
+        //   const votesFilteredArr = [];
+        //   const votes = this.state.votes;
+        //   votes.map(vote => {
+        //     // console.log("vote", vote)
+        //     const voteFeatureID = JSON.stringify(vote.feature_id);
+        //     // console.log("vote.feature_id", typeof voteFeatureID)
+        //     // console.log("feature.id", typeof feature.id)
 
-            if (voteFeatureID === feature.id) {
-              votesFilteredArr.push(vote);
-              // console.log("yes")
-            }
-            // console.log("getAllFeatures votesFilteredArr", votesFilteredArr)
-            const length = votesFilteredArr.length;
-            feature.votes = length;
-          });
-        });
+        //     if (voteFeatureID === feature.id) {
+        //       votesFilteredArr.push(vote);
+        //       // console.log("yes")
+        //     }
+        //     // console.log("getAllFeatures votesFilteredArr", votesFilteredArr)
+        //     const length = votesFilteredArr.length;
+        //     feature.votes = length;
+        //   });
+        this.getVoteCount(response.data);
+        // })
         // console.log("getAllFeatures features", features)
-        this.setState({ unfilteredFeatureList: features });
+        // this.setState({ unfilteredFeatureList: features });
         // this.sortByVotes();
       })
       .catch(err => console.log(`getAllFeatures err: ${err}`));
@@ -196,13 +244,15 @@ class App extends Component {
       data: { email: email, password: password }
     })
       .then(response => {
-        // this.getAllFeatures();
+        this.getAllCompanies();
+        this.getAllProducts();
+        this.getAllFeatures();
         TokenService.save(response.data.token);
         // console.log("login response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
         // this.getAllProducts("login");
-        // this.getAllVotes("login");
         // this.getAllFeatures("login");
+        this.getUserActivities();
       })
       .catch(err => console.log("login err", err));
   }
@@ -219,7 +269,6 @@ class App extends Component {
         // console.log("register response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
         // this.getAllProducts("register");
-        // this.getAllVotes("register");
         // this.getAllFeatures("register");
       })
       .catch(err => console.log("register err", err));
@@ -236,11 +285,42 @@ class App extends Component {
     // console.log("logged out user?", this.state.user);
   }
 
+  // ----------------------------MISC.----------------------------
+
+  // getInfo(category, name) {
+  //   // console.log("getInfo category", category);
+  //   // console.log("getInfo name", name);
+  //   axios({
+  //     url: `http://localhost:8080/activities/search/${category}/${name}`
+  //   })
+  //     .then(response => {
+  //       console.log("getInfo", response.data);
+  //       // this.setState({ searchResults: response.data });
+  //     })
+  //     .catch(err => console.log("getInfo err", err));
+  // }
+
   componentDidMount() {
+    this.getAllCompanies();
     this.getAllProducts();
-    this.getAllActivities();
     this.getAllFeatures();
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     this.state.unfilteredFeatureList.length !==
+  //       prevState.unfilteredFeatureList.length ||
+  //     this.state.products.length !== prevState.products.length ||
+  //     this.state.companies.length !== prevState.companies.length ||
+  //     this.state.votes.length !== prevState.votes.length ||
+  //     this.state.follows.length !== prevState.follows.length
+  //   ) {
+  //     this.getAllCompanies();
+  //     this.getAllProducts();
+  //     this.getAllActivities();
+  //     this.getAllFeatures();
+  //   }
+  // }
 
   render() {
     if (this.state.isLoggedIn === true) {
@@ -248,8 +328,14 @@ class App extends Component {
         <div>
           <NavBar
             addFeature={this.addFeature}
-            products={this.state.products}
+            // getInfo={this.getInfo}
             user={this.state.user}
+            products={this.state.products}
+            companies={this.state.companies}
+            votes={this.state.votes}
+            follows={this.state.follows}
+            unfilteredFeatureList={this.state.unfilteredFeatureList}
+            searchResults={this.state.searchResults}
           />
           <Router>
             <Switch>
@@ -287,13 +373,11 @@ class App extends Component {
                   <Home
                     {...props}
                     logout={this.logout}
-                    // getAllVotes={this.getAllVotes}
                     getAllFeatures={this.getAllFeatures}
                     addFeature={this.addFeature}
                     getAllActivities={this.getAllActivities}
                     newActivity={this.newActivity}
                     deleteActivity={this.deleteActivity}
-                    // getAllVotes={this.getAllVotes}
                     // seeUserFollows={this.seeUserFollows}
                     products={this.state.products}
                     unfilteredFeatureList={this.state.unfilteredFeatureList}
