@@ -24,6 +24,8 @@ import ProductList from "./Components/screens/productList";
 import ProductFeatures from "./Components/products/productFeatures";
 import Login from "./Components/screens/login";
 import NavBar from "./Components/NavBar/navBar";
+import AddFeature from "./Components/screens/addFeature";
+import ResultsBox from "./Components/screens/results/resultsBox";
 import "./App.css";
 import axios from "axios";
 import TokenService from "./Services/tokenService";
@@ -39,8 +41,8 @@ class App extends Component {
       user: [],
       votes: [],
       follows: [],
-      productFeatures: []
-      // searchResults: []
+      productFeatures: [],
+      searchResults: []
     };
     this.getAllCompanies = this.getAllCompanies.bind(this);
     this.getAllActivities = this.getAllActivities.bind(this);
@@ -56,6 +58,7 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.register = this.register.bind(this);
     this.sortActivities = this.sortActivities.bind(this);
+    this.grabSearchResults = this.grabSearchResults.bind(this);
     // this.getInfo = this.getInfo.bind(this);
   }
 
@@ -66,7 +69,12 @@ class App extends Component {
       url: "http://localhost:8080/companies"
     })
       .then(response => {
-        this.setState({ companies: response.data });
+        const companies = response.data.map(company => {
+          company.category = "company";
+          return company;
+        });
+        // console.log("getAllCompanies", companies);
+        this.setState({ companies: companies });
       })
       .catch(err => console.log(`getAllCompanies err: ${err}`));
   }
@@ -79,7 +87,12 @@ class App extends Component {
       url: "http://localhost:8080/products"
     })
       .then(response => {
-        this.setState({ products: response.data });
+        const products = response.data.map(product => {
+          product.category = "product";
+          return product;
+        });
+        // console.log("getAllProducts", products);
+        this.setState({ products: products });
       })
       .catch(err => console.log(`getAllProducts err: ${err}`));
   }
@@ -95,6 +108,7 @@ class App extends Component {
       } else if (activity.type === "follow") {
         follows.push(activity);
       }
+      return activity;
     });
     this.setState({ votes: votes, follows: follows });
     // console.log("sortActivities state votes", this.state.votes);
@@ -147,8 +161,8 @@ class App extends Component {
 
   getVoteCount(features) {
     // console.log("getVoteCount features", features);
-    const unfilteredFeatureList = features;
-    unfilteredFeatureList.map(feature => {
+    const unfilteredFeatureList = features.map(feature => {
+      feature.category = "feature";
       axios({
         url: `http://localhost:8080/activities/${feature.id}/votes`
       })
@@ -157,8 +171,9 @@ class App extends Component {
           feature.votes = response.data;
         })
         .catch(err => console.log(`getVoteCount err: ${err}`));
+      return feature;
     });
-    // console.log("getVoteCount post axios arr", unfilteredFeatureList);
+    // console.log("getVoteCount", unfilteredFeatureList);
     this.setState({ unfilteredFeatureList: unfilteredFeatureList });
   }
 
@@ -287,6 +302,11 @@ class App extends Component {
 
   // ----------------------------MISC.----------------------------
 
+  grabSearchResults(results) {
+    // console.log("grabSearchResults results", results);
+    this.setState({ searchResults: results });
+  }
+
   // getInfo(category, name) {
   //   // console.log("getInfo category", category);
   //   // console.log("getInfo name", name);
@@ -325,19 +345,20 @@ class App extends Component {
   render() {
     if (this.state.isLoggedIn === true) {
       return (
-        <div>
-          <NavBar
-            addFeature={this.addFeature}
-            // getInfo={this.getInfo}
-            user={this.state.user}
-            products={this.state.products}
-            companies={this.state.companies}
-            votes={this.state.votes}
-            follows={this.state.follows}
-            unfilteredFeatureList={this.state.unfilteredFeatureList}
-            searchResults={this.state.searchResults}
-          />
-          <Router>
+        <Router>
+          <div>
+            <NavBar
+              addFeature={this.addFeature}
+              grabSearchResults={this.grabSearchResults}
+              // getInfo={this.getInfo}
+              user={this.state.user}
+              products={this.state.products}
+              companies={this.state.companies}
+              votes={this.state.votes}
+              follows={this.state.follows}
+              unfilteredFeatureList={this.state.unfilteredFeatureList}
+              // searchResults={this.state.searchResults}
+            />
             <Switch>
               <Route
                 exact
@@ -361,8 +382,31 @@ class App extends Component {
                 path="/product"
                 render={props => (
                   <ProductList
+                    {...props}
                     products={this.state.products}
                     unfilteredFeatureList={this.state.unfilteredFeatureList}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/addFeature"
+                render={props => (
+                  <AddFeature
+                    {...props}
+                    addFeature={this.addFeature}
+                    products={this.state.products}
+                    user={this.state.user}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/results"
+                render={props => (
+                  <ResultsBox
+                    {...props}
+                    searchResults={this.state.searchResults}
                   />
                 )}
               />
@@ -389,8 +433,8 @@ class App extends Component {
               />
               <Route path="/" render={() => <Redirect to="/home" />} />
             </Switch>
-          </Router>
-        </div>
+          </div>
+        </Router>
       );
     } else if (this.state.isLoggedIn === false) {
       return (
