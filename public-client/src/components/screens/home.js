@@ -47,6 +47,7 @@ export default class Home extends Component {
       if (follow.user_email === this.props.user.email) {
         featureIDs.push(follow.feature_id);
       }
+      return follow;
     });
     // console.log("sortByUserFollow featureIDs", featureIDs);
     const filteredFeatures = [];
@@ -55,7 +56,9 @@ export default class Home extends Component {
         if (feature.id === JSON.stringify(featureID)) {
           filteredFeatures.push(feature);
         }
+        return featureID;
       });
+      return feature;
     });
     // console.log("sortByUserFollow filteredFeatures", filteredFeatures);
     this.setState({ filteredResults: filteredFeatures });
@@ -119,7 +122,8 @@ export default class Home extends Component {
           checkNewVotes={this.checkNewVotes}
           getAllFeatures={this.props.getAllFeatures}
           editFeature={this.props.editFeature}
-          getAllActivities={this.props.getAllActivities}
+          // getAllActivities={this.props.getAllActivities}
+          getUserActivities={this.props.getUserActivities}
           newActivity={this.props.newActivity}
           deleteActivity={this.props.deleteActivity}
           // sortByVotes={this.props.sortByVotes}

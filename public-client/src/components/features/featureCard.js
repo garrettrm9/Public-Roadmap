@@ -55,67 +55,96 @@ export default class FeatureCard extends Component {
   }
 
   checkForVote() {
-    const products = this.props.products;
-    for (var i = 0; i < products.length; i++) {
-      if (this.props.feature.product_name === products[i].name) {
-        // console.log("logic check product company name", products[i].company_name)
-        this.setState({ companyName: products[i].company_name });
-        break;
-      }
-    }
-    const votes = this.props.votes;
-    // console.log("card votes", votes)
-    for (var x = 0; x < votes.length; x++) {
-      const voteFeatureID = JSON.stringify(votes[x].feature_id);
-      // console.log("votes[i].feature_id", votes[x].feature_id)
-      // console.log("voteFeatureID", voteFeatureID)
-      // console.log("this.props.feature.id", this.props.feature.id)
-      if (
-        voteFeatureID === this.props.feature.id &&
-        votes[x].user_email === this.props.user.email &&
-        votes[x].type === "vote"
-      ) {
-        this.setState({ votesActive: true });
-        this.setState({ vote: votes[x] });
-        break;
-      }
-    }
+    this.setState({ votesActive: this.props.feature.userVote });
+    // const products = this.props.products;
+    // for (var i = 0; i < products.length; i++) {
+    //   if (this.props.feature.product_name === products[i].name) {
+    //     // console.log("logic check product company name", products[i].company_name)
+    //     this.setState({ companyName: products[i].company_name });
+    //     break;
+    //   }
+    // }
+    // const votes = this.props.votes;
+    // // console.log("card votes", votes)
+    // for (var x = 0; x < votes.length; x++) {
+    //   const voteFeatureID = JSON.stringify(votes[x].feature_id);
+    //   // console.log("votes[i].feature_id", votes[x].feature_id)
+    //   // console.log("voteFeatureID", voteFeatureID)
+    //   // console.log("this.props.feature.id", this.props.feature.id)
+    //   if (
+    //     voteFeatureID === this.props.feature.id &&
+    //     votes[x].user_email === this.props.user.email &&
+    //     votes[x].type === "vote"
+    //   ) {
+    //     this.setState({ votesActive: true });
+    //     this.setState({ vote: votes[x] });
+    //     break;
+    //   }
+    // }
   }
 
   checkForFollow() {
-    const products = this.props.products;
-    for (var i = 0; i < products.length; i++) {
-      if (this.props.feature.product_name === products[i].name) {
-        // console.log("logic check product company name", products[i].company_name)
-        this.setState({ companyName: products[i].company_name });
-        break;
-      }
-    }
-    const follows = this.props.follows;
-    // console.log("card votes", votes)
-    for (var x = 0; x < follows.length; x++) {
-      const followFeatureID = JSON.stringify(follows[x].feature_id);
-      // console.log("follows[i].feature_id", follows[x].feature_id)
-      // console.log("followFeatureID", followFeatureID)
-      // console.log("this.props.feature.id", this.props.feature.id)
-      if (
-        followFeatureID === this.props.feature.id &&
-        follows[x].user_email === this.props.user.email &&
-        follows[x].type === "follow"
-      ) {
-        this.setState({ followActive: true });
-        this.setState({ follow: follows[x] });
-        break;
-      }
-    }
+    this.setState({ followActive: this.props.feature.userFollow });
+    // const products = this.props.products;
+    // for (var i = 0; i < products.length; i++) {
+    //   if (this.props.feature.product_name === products[i].name) {
+    //     // console.log("logic check product company name", products[i].company_name)
+    //     this.setState({ companyName: products[i].company_name });
+    //     break;
+    //   }
+    // }
+    // const follows = this.props.follows;
+    // // console.log("card votes", votes)
+    // for (var x = 0; x < follows.length; x++) {
+    //   const followFeatureID = JSON.stringify(follows[x].feature_id);
+    //   // console.log("follows[i].feature_id", follows[x].feature_id)
+    //   // console.log("followFeatureID", followFeatureID)
+    //   // console.log("this.props.feature.id", this.props.feature.id)
+    //   if (
+    //     followFeatureID === this.props.feature.id &&
+    //     follows[x].user_email === this.props.user.email &&
+    //     follows[x].type === "follow"
+    //   ) {
+    //     this.setState({ followActive: true });
+    //     this.setState({ follow: follows[x] });
+    //     break;
+    //   }
+    // }
   }
 
   componentDidMount() {
     this.checkForVote();
     this.checkForFollow();
+    // console.log("FeatureCard votes", this.props.votes);
+    // console.log("FeatureCard follows", this.props.follows);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.feature.userVote !== prevProps.feature.userVote &&
+      this.props.feature.userFollow !== prevProps.feature.userFollow
+    ) {
+      this.checkForVote();
+      this.checkForFollow();
+    } else if (this.props.feature.userVote !== prevProps.feature.userVote) {
+      this.checkForVote();
+    } else if (this.props.feature.userFollow !== prevProps.feature.userFollow) {
+      this.checkForFollow();
+    } else {
+      console.log("FeatureCard update nope");
+    }
+    //   // if (this.props.votes.length > 0) {
+    //   //   console.log("votes", this.props.votes);
+    //   // } else
+    //   if (this.props.follows.length > 0) {
+    //     console.log("follows", this.props.follows);
+    //   } else {
+    //     console.log("nope");
+    //   }
   }
 
   render() {
+    console.log("FeatureCard render", this.props.feature);
     const feature = this.props.feature;
     const date = feature.date_last_updated.split("T");
     return (

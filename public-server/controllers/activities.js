@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const activity = require("../models/activity");
 
-router.get("/", activity.getAllActivities, (req, res) => {
-  const { activities } = res.locals;
-  res.json(activities);
-});
+// router.get("/", activity.getAllActivities, (req, res) => {
+//   const { activities } = res.locals;
+//   res.json(activities);
+// });
 
 router.get("/:id", activity.getAllUserActivities, (req, res) => {
   const { activities } = res.locals;

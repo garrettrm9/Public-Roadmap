@@ -2,20 +2,20 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import AddFeatureForm from "./addFeatureForm";
 import Search from "./search";
-import { Alignment, Button, Dialog, Navbar } from "@blueprintjs/core";
+import { Alignment, Button, Navbar } from "@blueprintjs/core";
 
 export default class NavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalOpen: false
-    };
-    this.toggleOverlay = this.toggleOverlay.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     modalOpen: false
+  //   };
+  //   this.toggleOverlay = this.toggleOverlay.bind(this);
+  // }
 
-  toggleOverlay() {
-    this.setState({ modalOpen: !this.state.modalOpen });
-  }
+  // toggleOverlay() {
+  //   this.setState({ modalOpen: !this.state.modalOpen });
+  // }
 
   render() {
     return (

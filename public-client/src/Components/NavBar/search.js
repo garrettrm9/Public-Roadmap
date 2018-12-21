@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Icon,
   Button
@@ -51,7 +51,7 @@ export default class Search extends Component {
     // console.log("sortSearch newList", newList);
     // console.log("sortSearch end?", category[list]);
     const results = [];
-    const newList = list.map(category => {
+    list.map(category => {
       const searcher = new FuzzySearch(category.results, ["name"]);
       const result = searcher.search(query);
       const resultObj = {};
@@ -134,13 +134,13 @@ export default class Search extends Component {
           placeholder="Search"
           onChange={this.handleInputChange}
         />
-          <Link to="/results">
-            <Button
-              icon="plus"
-              className="bp3-minimal"
-              onClick={this.handleClick}
-            />
-          </Link>
+        <Link to="/results">
+          <Button
+            icon="plus"
+            className="bp3-minimal"
+            onClick={this.handleClick}
+          />
+        </Link>
       </div>
     );
   }

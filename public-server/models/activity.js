@@ -1,18 +1,18 @@
 const db = require("../db/index.js");
 const activity = {};
 
-activity.getAllActivities = (req, res, next) => {
-  db
-    .manyOrNone("SELECT * FROM activities")
-    .then(activities => {
-      res.locals.activities = activities;
-      next();
-    })
-    .catch(error => {
-      console.log("error from getAllActivities model", error);
-      next(error);
-    });
-};
+// activity.getAllActivities = (req, res, next) => {
+//   db
+//     .manyOrNone("SELECT * FROM activities")
+//     .then(activities => {
+//       res.locals.activities = activities;
+//       next();
+//     })
+//     .catch(error => {
+//       console.log("error from getAllActivities model", error);
+//       next(error);
+//     });
+// };
 
 activity.getAllUserActivities = (req, res, next) => {
   db

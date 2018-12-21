@@ -45,7 +45,7 @@ class App extends Component {
       searchResults: []
     };
     this.getAllCompanies = this.getAllCompanies.bind(this);
-    this.getAllActivities = this.getAllActivities.bind(this);
+    // this.getAllActivities = this.getAllActivities.bind(this);
     this.getVoteCount = this.getVoteCount.bind(this);
     this.getUserActivities = this.getUserActivities.bind(this);
     this.getAllProductFeatures = this.getAllProductFeatures.bind(this);
@@ -100,6 +100,7 @@ class App extends Component {
   // ----------------------------ACTIVITIES----------------------------
 
   sortActivities(activities) {
+    // console.log("sortActivities activities", activities);
     const votes = [];
     const follows = [];
     activities.map(activity => {
@@ -111,21 +112,21 @@ class App extends Component {
       return activity;
     });
     this.setState({ votes: votes, follows: follows });
-    // console.log("sortActivities state votes", this.state.votes);
-    // console.log("sortActivities state follows", this.state.follows);
+    // console.log("sortActivities votes", votes);
+    // console.log("sortActivities follows", follows);
   }
 
-  getAllActivities() {
-    axios({
-      url: "http://localhost:8080/activities"
-    })
-      .then(response => {
-        const activities = response.data;
-        // console.log("getAllActivities resp", activities);
-        this.sortActivities(activities);
-      })
-      .catch(err => console.log(`getAllActivities err: ${err}`));
-  }
+  // getAllActivities() {
+  //   axios({
+  //     url: "http://localhost:8080/activities"
+  //   })
+  //     .then(response => {
+  //       const activities = response.data;
+  //       // console.log("getAllActivities resp", activities);
+  //       this.sortActivities(activities);
+  //     })
+  //     .catch(err => console.log(`getAllActivities err: ${err}`));
+  // }
 
   newActivity(featureID, userEmail, type) {
     axios({
@@ -137,7 +138,8 @@ class App extends Component {
       }
     })
       .then(response => {
-        this.getAllActivities();
+        // this.getAllActivities();
+        this.getUserActivities();
         this.getAllFeatures();
       })
       .catch(err => console.log(`newActivity err: ${err}`));
@@ -153,7 +155,8 @@ class App extends Component {
       }
     })
       .then(response => {
-        this.getAllActivities();
+        // this.getAllActivities();
+        this.getUserActivities();
         this.getAllFeatures();
       })
       .catch(err => console.log(`deleteActivity err: ${err}`));
@@ -244,7 +247,8 @@ class App extends Component {
       data: data
     })
       .then(response => {
-        this.getAllActivities();
+        // this.getAllActivities();
+        this.getUserActivities();
         this.getAllFeatures();
       })
       .catch(err => console.log(`addFeature err: ${err}`));
@@ -259,9 +263,9 @@ class App extends Component {
       data: { email: email, password: password }
     })
       .then(response => {
-        this.getAllCompanies();
-        this.getAllProducts();
-        this.getAllFeatures();
+        // this.getAllCompanies();
+        // this.getAllProducts();
+        // this.getAllFeatures();
         TokenService.save(response.data.token);
         // console.log("login response", response.data);
         this.setState({ isLoggedIn: true, user: response.data.user });
@@ -419,7 +423,8 @@ class App extends Component {
                     logout={this.logout}
                     getAllFeatures={this.getAllFeatures}
                     addFeature={this.addFeature}
-                    getAllActivities={this.getAllActivities}
+                    // getAllActivities={this.getAllActivities}
+                    getUserActivities={this.getUserActivities}
                     newActivity={this.newActivity}
                     deleteActivity={this.deleteActivity}
                     // seeUserFollows={this.seeUserFollows}
