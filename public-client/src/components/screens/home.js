@@ -106,8 +106,6 @@ export default class Home extends Component {
     return (
       <div>
         <h3 className={Classes.HEADING}>Browse Feature Requests</h3>
-        <Button icon="log-out" text="Logout" onClick={this.props.logout} />
-        <div className="buttonDivider" />
         <Button onClick={this.handleDateClicked}>Sort by date!</Button>
         <Button onClick={this.handleVotesClicked}>Sort by votes!</Button>
         <Button onClick={this.handleFollowClicked}>
@@ -115,9 +113,6 @@ export default class Home extends Component {
         </Button>
         <br />
         <br />
-        <Link to="/product">
-          <Button> Product page</Button>
-        </Link>
         <FilteredFeatureList
           checkNewVotes={this.checkNewVotes}
           getAllFeatures={this.props.getAllFeatures}

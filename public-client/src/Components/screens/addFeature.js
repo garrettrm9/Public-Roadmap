@@ -65,9 +65,6 @@ export default class AddFeatureForm extends Component {
     const productNames = this.props.products.map(this.renderProducts);
     return (
       <div>
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
         <h4 className="bp3-heading">Submit feature request</h4>
         <h4>As much detail as possible!</h4>
         <div>

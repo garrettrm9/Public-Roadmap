@@ -46,13 +46,6 @@ export default class ResultsBox extends Component {
     // const featResults = this.props.featuresResults;
     // let maybeRender = null;
 
-    return (
-      <div>
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
-        {results}
-      </div>
-    );
+    return <div>{results}</div>;
   }
 }

@@ -7,9 +7,9 @@ export default class FeatureCard extends Component {
     this.state = {
       companyName: "",
       votesActive: false,
-      vote: "",
-      followActive: false,
-      follow: ""
+      followActive: false
+      // vote: "",
+      // follow: ""
     };
 
     this.voteClick = this.voteClick.bind(this);
@@ -55,6 +55,7 @@ export default class FeatureCard extends Component {
   }
 
   checkForVote() {
+    console.log("checkForVote userVote prop", this.props.feature.userVote);
     this.setState({ votesActive: this.props.feature.userVote });
     // const products = this.props.products;
     // for (var i = 0; i < products.length; i++) {
@@ -84,6 +85,10 @@ export default class FeatureCard extends Component {
   }
 
   checkForFollow() {
+    console.log(
+      "checkForFollow userFollow prop",
+      this.props.feature.userFollow
+    );
     this.setState({ followActive: this.props.feature.userFollow });
     // const products = this.props.products;
     // for (var i = 0; i < products.length; i++) {
@@ -112,36 +117,38 @@ export default class FeatureCard extends Component {
     // }
   }
 
-  componentDidMount() {
-    this.checkForVote();
-    this.checkForFollow();
-    // console.log("FeatureCard votes", this.props.votes);
-    // console.log("FeatureCard follows", this.props.follows);
-  }
+  // componentDidMount() {
+  //   this.checkForVote();
+  //   this.checkForFollow();
+  // console.log("FeatureCard votes", this.props.votes);
+  // console.log("FeatureCard follows", this.props.follows);
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.feature.userVote !== prevProps.feature.userVote &&
-      this.props.feature.userFollow !== prevProps.feature.userFollow
-    ) {
-      this.checkForVote();
-      this.checkForFollow();
-    } else if (this.props.feature.userVote !== prevProps.feature.userVote) {
-      this.checkForVote();
-    } else if (this.props.feature.userFollow !== prevProps.feature.userFollow) {
-      this.checkForFollow();
-    } else {
-      console.log("FeatureCard update nope");
-    }
-    //   // if (this.props.votes.length > 0) {
-    //   //   console.log("votes", this.props.votes);
-    //   // } else
-    //   if (this.props.follows.length > 0) {
-    //     console.log("follows", this.props.follows);
-    //   } else {
-    //     console.log("nope");
-    //   }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("featureCard update props", this.props.feature.userVote);
+  //   console.log("featureCard update prevProps", prevProps.feature.userVote);
+  //   if (
+  //     this.props.feature.userVote !== prevProps.feature.userVote ||
+  //     this.props.feature.userFollow !== prevProps.feature.userFollow
+  //   ) {
+  //     this.checkForVote();
+  //     this.checkForFollow();
+  //     // } else if (this.props.feature.userVote !== prevProps.feature.userVote) {
+  //     //     this.checkForVote();
+  //     //   } else if (this.props.feature.userFollow !== prevProps.feature.userFollow) {
+  //     //     this.checkForFollow();
+  //     //   } else {
+  //     //     console.log("FeatureCard update nope");
+  //     //   }
+  //     //   // if (this.props.votes.length > 0) {
+  //     //   //   console.log("votes", this.props.votes);
+  //     //   // } else
+  //     //   if (this.props.follows.length > 0) {
+  //     //     console.log("follows", this.props.follows);
+  //   } else {
+  //     console.log("nope");
+  //   }
+  // }
 
   render() {
     console.log("FeatureCard render", this.props.feature);
@@ -162,10 +169,10 @@ export default class FeatureCard extends Component {
           <h4>Purpose: {feature.purpose}</h4>
           <h4>Votes: {feature.votes}</h4>
           <h4>Last updated: {date[0]}</h4>
-          <Button active={this.state.votesActive} onClick={this.voteClick}>
+          <Button active={feature.votesActive} onClick={this.voteClick}>
             Vote or die!
           </Button>
-          <Button active={this.state.followActive} onClick={this.followClick}>
+          <Button active={feature.followActive} onClick={this.followClick}>
             Follow or die!
           </Button>
         </Card>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   Icon,
   Button
@@ -17,7 +17,8 @@ export default class Search extends Component {
     this.state = {
       category: "click here",
       query: "",
-      results: []
+      results: [],
+      navigateToResults: false
       // companiesResults: [],
       // productsResults: [],
       // featuresResults: []
@@ -64,7 +65,7 @@ export default class Search extends Component {
 
     // console.log("sortSearch post search results", results);
     this.props.grabSearchResults(results);
-
+    this.setState({ navigateToResults: true });
     // this.setState({ results: results });
     // // const results = {};
     // results.results = result;
@@ -125,26 +126,45 @@ export default class Search extends Component {
   // }
 
   render() {
+    let maybeRedirect = null;
+    if (this.state.navigateToResults === true) {
+      maybeRedirect = <Redirect to="/results" />;
+    }
     return (
       <div className="bp3-input-group">
-        <Icon icon="search" />
+        {maybeRedirect}
+        <Icon className="bp3-icon" icon="search" />
         <input
-          className="bp3-input"
           type="search"
+          className="bp3-input"
           placeholder="Search"
           onChange={this.handleInputChange}
         />
-        <Link to="/results">
-          <Button
-            icon="plus"
-            className="bp3-minimal"
-            onClick={this.handleClick}
-          />
-        </Link>
+        <Button
+          className="bp3-minimal"
+          icon="arrow-right"
+          onClick={this.handleClick}
+        />
       </div>
     );
   }
 }
+
+// <div className="bp3-input-group">
+//         <Link to="/results">
+//           <Button
+//             icon="search"
+//             className="bp3-minimal"
+//             onClick={this.handleClick}
+//           />
+//         </Link>
+//         <input
+//           className="bp3-input"
+//           type="search"
+//           placeholder="Search"
+//           onChange={this.handleInputChange}
+//         />
+//       </div>
 
 // <ResultsBox
 //   // companiesResults={this.state.companiesResults}

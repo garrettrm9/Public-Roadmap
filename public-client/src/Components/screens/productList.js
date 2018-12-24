@@ -23,9 +23,6 @@ export default class ProductList extends Component {
     const products = this.props.products.map(this.renderProducts);
     return (
       <div>
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
         <h1>Product</h1>
         {products}
       </div>

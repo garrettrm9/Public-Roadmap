@@ -42,12 +42,6 @@ export default class ProductFeatures extends Component {
     }
     return (
       <div className="featureCardsContainer">
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
-        <Link to="/product">
-          <Button> Product page</Button>
-        </Link>
         <h2>{this.state.productName} features:</h2>
         {productFeatures}
       </div>

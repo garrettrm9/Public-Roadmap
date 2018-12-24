@@ -21,19 +21,30 @@ export default class NavBar extends Component {
     return (
       <Navbar>
         <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>Blueprint</Navbar.Heading>
+          <Navbar.Heading>Roadmap</Navbar.Heading>
           <Navbar.Divider />
-          <Button className="bp3-minimal" icon="home" text="Home" />
-          <Button className="bp3-minimal" icon="document" text="Files" />
-          <div>
-            <Link to="/addFeature">
-              <Button
-                className="bp3-minimal"
-                icon="plus"
-                text="Add feature request"
-              />
-            </Link>
-          </div>
+          <Link to="/home">
+            <Button className="bp3-minimal" icon="home" text="Home" />
+          </Link>
+          <Link to="/addFeature">
+            <Button
+              className="bp3-minimal"
+              icon="plus"
+              text="Add feature request"
+            />
+          </Link>
+          <Link to="/product">
+            <Button className="bp3-minimal" icon="projects" text="Products" />
+          </Link>
+          <Link to="/company">
+            <Button className="bp3-minimal" icon="briefcase" text="Companies" />
+          </Link>
+          <Button
+            className="bp3-minimal"
+            icon="log-out"
+            text="Logout"
+            onClick={this.props.logout}
+          />
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
           <Search

@@ -353,6 +353,7 @@ class App extends Component {
           <div>
             <NavBar
               addFeature={this.addFeature}
+              logout={this.logout}
               grabSearchResults={this.grabSearchResults}
               // getInfo={this.getInfo}
               user={this.state.user}
@@ -420,7 +421,6 @@ class App extends Component {
                 render={props => (
                   <Home
                     {...props}
-                    logout={this.logout}
                     getAllFeatures={this.getAllFeatures}
                     addFeature={this.addFeature}
                     // getAllActivities={this.getAllActivities}
