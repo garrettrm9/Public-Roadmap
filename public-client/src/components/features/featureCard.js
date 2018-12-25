@@ -6,8 +6,8 @@ export default class FeatureCard extends Component {
     super(props);
     this.state = {
       companyName: "",
-      votesActive: false,
-      followActive: false
+      votesActive: this.props.feature.votesActive,
+      followActive: this.props.feature.followActive
       // vote: "",
       // follow: ""
     };
@@ -124,34 +124,34 @@ export default class FeatureCard extends Component {
   // console.log("FeatureCard follows", this.props.follows);
   // }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("featureCard update props", this.props.feature.userVote);
-  //   console.log("featureCard update prevProps", prevProps.feature.userVote);
-  //   if (
-  //     this.props.feature.userVote !== prevProps.feature.userVote ||
-  //     this.props.feature.userFollow !== prevProps.feature.userFollow
-  //   ) {
-  //     this.checkForVote();
-  //     this.checkForFollow();
-  //     // } else if (this.props.feature.userVote !== prevProps.feature.userVote) {
-  //     //     this.checkForVote();
-  //     //   } else if (this.props.feature.userFollow !== prevProps.feature.userFollow) {
-  //     //     this.checkForFollow();
-  //     //   } else {
-  //     //     console.log("FeatureCard update nope");
-  //     //   }
-  //     //   // if (this.props.votes.length > 0) {
-  //     //   //   console.log("votes", this.props.votes);
-  //     //   // } else
-  //     //   if (this.props.follows.length > 0) {
-  //     //     console.log("follows", this.props.follows);
-  //   } else {
-  //     console.log("nope");
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    //   console.log("featureCard update props", this.props.feature.userVote);
+    //   console.log("featureCard update prevProps", prevProps.feature.userVote);
+    if (
+      this.props.feature.length !== prevProps.feature.length
+      // || this.props.feature.userFollow !== prevProps.feature.userFollow
+    ) {
+      this.checkForVote();
+      //     this.checkForFollow();
+      //     // } else if (this.props.feature.userVote !== prevProps.feature.userVote) {
+      //     //     this.checkForVote();
+      //     //   } else if (this.props.feature.userFollow !== prevProps.feature.userFollow) {
+      //     //     this.checkForFollow();
+      //     //   } else {
+      //     //     console.log("FeatureCard update nope");
+      //     //   }
+      //     //   // if (this.props.votes.length > 0) {
+      //     //   //   console.log("votes", this.props.votes);
+      //     //   // } else
+      //     //   if (this.props.follows.length > 0) {
+      //     //     console.log("follows", this.props.follows);
+      //   } else {
+      //     console.log("nope");
+    }
+  }
 
   render() {
-    console.log("FeatureCard render", this.props.feature);
+    // console.log("FeatureCard render", this.props.feature);
     const feature = this.props.feature;
     const date = feature.date_last_updated.split("T");
     return (
@@ -163,7 +163,7 @@ export default class FeatureCard extends Component {
         >
           <h2>Name: {feature.name}</h2>
           <h3>Product: {feature.product_name}</h3>
-          <h3>Company: {this.state.companyName}</h3>
+          <h3>Company: {feature.company_name}</h3>
           <h3>Proposed by: {feature.user_email}</h3>
           <h4>id: {feature.id}</h4>
           <h4>Purpose: {feature.purpose}</h4>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@blueprintjs/core";
+// import { Link } from "react-router-dom";
+// import { Button } from "@blueprintjs/core";
 import ProductCard from "../products/productCard";
 
 export default class ProductList extends Component {

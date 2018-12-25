@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FilteredFeatureList from "../features/filteredFeatureList";
 import { Button, Classes } from "@blueprintjs/core";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 export default class Home extends Component {
   constructor(props) {

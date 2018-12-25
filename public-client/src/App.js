@@ -46,6 +46,7 @@ class App extends Component {
     };
     this.getAllCompanies = this.getAllCompanies.bind(this);
     // this.getAllActivities = this.getAllActivities.bind(this);
+    this.getCompanyName = this.getCompanyName.bind(this);
     this.getVoteCount = this.getVoteCount.bind(this);
     this.getUserActivities = this.getUserActivities.bind(this);
     this.getAllProductFeatures = this.getAllProductFeatures.bind(this);
@@ -162,6 +163,23 @@ class App extends Component {
       .catch(err => console.log(`deleteActivity err: ${err}`));
   }
 
+  getCompanyName(features) {
+    // console.log("getCompanyName features", features);
+    const unfilteredFeatureList = features.map(feature => {
+      axios({
+        url: `http://localhost:8080/activities/${feature.product_name}/company`
+      })
+        .then(response => {
+          const companyName = response.data[0].company_name;
+          // console.log("getCompanyName companyName", companyName);
+          feature.company_name = companyName;
+        })
+        .catch(err => console.log(`getCompanyName err: ${err}`));
+      return feature;
+    });
+    this.setState({ unfilteredFeatureList: unfilteredFeatureList });
+  }
+
   getVoteCount(features) {
     // console.log("getVoteCount features", features);
     const unfilteredFeatureList = features.map(feature => {
@@ -177,7 +195,8 @@ class App extends Component {
       return feature;
     });
     // console.log("getVoteCount", unfilteredFeatureList);
-    this.setState({ unfilteredFeatureList: unfilteredFeatureList });
+    // this.setState({ unfilteredFeatureList: unfilteredFeatureList });
+    this.getCompanyName(unfilteredFeatureList);
   }
 
   getUserActivities() {

@@ -44,4 +44,9 @@ router.get("/:id/votes", activity.getVoteCount, (req, res) => {
   res.json(votes);
 });
 
+router.get("/:id/company", activity.getCompanyName, (req, res) => {
+  const { name } = res.locals;
+  res.json(name);
+});
+
 module.exports = router;

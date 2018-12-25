@@ -57,6 +57,21 @@ activity.getVoteCount = (req, res, next) => {
     });
 };
 
+activity.getCompanyName = (req, res, next) => {
+  db
+    .manyOrNone("SELECT company_name from products where name=$1", [
+      req.params.id
+    ])
+    .then(name => {
+      res.locals.name = name;
+      next();
+    })
+    .catch(error => {
+      console.log("error from getCompanyName model", error);
+      next(error);
+    });
+};
+
 activity.newActivity = (req, res, next) => {
   db
     .one(
