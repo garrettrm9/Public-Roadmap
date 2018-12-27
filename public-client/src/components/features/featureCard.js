@@ -155,11 +155,11 @@ export default class FeatureCard extends Component {
     const feature = this.props.feature;
     const date = feature.date_last_updated.split("T");
     return (
-      <div>
+      <div className="featureCards">
         <Card
           interactive={true}
           // elevation={Elevation.FOUR}
-          className="featureCards bp3-card bp3-interactive"
+          className="bp3-card bp3-interactive"
         >
           <h2>Name: {feature.name}</h2>
           <h3>Product: {feature.product_name}</h3>

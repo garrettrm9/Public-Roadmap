@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Icon,
   Button
@@ -27,7 +27,13 @@ export default class Search extends Component {
     this.handleClick = this.handleClick.bind(this);
     // this.handleCategory = this.handleCategory.bind(this);
     this.sortSearch = this.sortSearch.bind(this);
+    // this.goToResults = this.goToResults.bind(this);
   }
+
+  // goToResults() {
+  //   return <Redirect to="/results" />;
+  //   this.setState({ navigateToResults: false });
+  // }
 
   sortSearch(list, query) {
     // console.log("sortSearch list", list);
@@ -65,7 +71,8 @@ export default class Search extends Component {
 
     // console.log("sortSearch post search results", results);
     this.props.grabSearchResults(results);
-    this.setState({ navigateToResults: true });
+    // console.log("searchBar history props", this.props);
+    // this.setState({ navigateToResults: true });
     // this.setState({ results: results });
     // // const results = {};
     // results.results = result;
@@ -96,6 +103,9 @@ export default class Search extends Component {
     // products.products = this.props.products;
     // const features = {};
     // features.features = this.props.unfilteredFeatureList;
+
+    // this.setState({ navigateToResults: true });
+
     const list = [];
 
     const companies = {};
@@ -113,10 +123,11 @@ export default class Search extends Component {
     list.push(companies, products, features);
     // console.log("handleClick list", list);
     this.sortSearch(list, this.state.query);
+    // this.setState({ navigateToResults: true });
   }
 
   handleInputChange(e) {
-    // console.log("handleInputChange e value", e.target.value);
+    // console.log( "handleInputChange e value", e.target.value);
     this.setState({ query: e.target.value });
   }
 
@@ -126,13 +137,12 @@ export default class Search extends Component {
   // }
 
   render() {
-    let maybeRedirect = null;
-    if (this.state.navigateToResults === true) {
-      maybeRedirect = <Redirect to="/results" />;
-    }
+    // let maybeRedirect = null;
+    // if (this.state.navigateToResults === true) {
+    //   maybeRedirect = this.goToResults();
+    // }
     return (
       <div className="bp3-input-group">
-        {maybeRedirect}
         <Icon className="bp3-icon" icon="search" />
         <input
           type="search"
@@ -140,11 +150,14 @@ export default class Search extends Component {
           placeholder="Search"
           onChange={this.handleInputChange}
         />
-        <Button
-          className="bp3-minimal"
-          icon="arrow-right"
-          onClick={this.handleClick}
-        />
+        <Link to="/results">
+          <Button
+            className="bp3-minimal"
+            type="submit"
+            icon="arrow-right"
+            onClick={this.handleClick}
+          />
+        </Link>
       </div>
     );
   }

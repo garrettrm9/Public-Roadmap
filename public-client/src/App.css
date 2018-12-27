@@ -1,16 +1,27 @@
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 
 .featureCards {
-  width: 25%;
-  margin: auto;
+  /*  width: 25%;
+*/ /*  margin: auto;
+*/
+  /*  flex: 1;
+*/
+  flex-direction: "row";
 }
 
 .cardDivider {
-  padding-bottom: 25px;
+  padding-bottom: 20px;
 }
 
 .featureCardsContainer {
-  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  /*  padding-bottom: 20px;*/
+
+  text-align: right;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .buttonDivider {
@@ -28,4 +39,12 @@
 .resultCategory {
   /*  padding-top: 50px;
 */
+}
+
+.noBreak {
+  white-space: nowrap;
+}
+
+.navbar {
+  background-color: red;
 }

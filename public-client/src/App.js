@@ -18,8 +18,11 @@ import {
   Switch,
   Route,
   Redirect
+  // MemoryRouter
 } from "react-router-dom";
 import Home from "./Components/screens/home";
+import CompanyList from "./Components/screens/companyList";
+import CompanyProducts from "./Components/companies/companyProducts";
 import ProductList from "./Components/screens/productList";
 import ProductFeatures from "./Components/products/productFeatures";
 import Login from "./Components/screens/login";
@@ -41,10 +44,13 @@ class App extends Component {
       user: [],
       votes: [],
       follows: [],
+      companyProducts: [],
       productFeatures: [],
-      searchResults: []
+      searchResults: [],
+      navigateToResults: false
     };
     this.getAllCompanies = this.getAllCompanies.bind(this);
+    this.getCompanyProducts = this.getCompanyProducts.bind(this);
     // this.getAllActivities = this.getAllActivities.bind(this);
     this.getCompanyName = this.getCompanyName.bind(this);
     this.getVoteCount = this.getVoteCount.bind(this);
@@ -78,6 +84,18 @@ class App extends Component {
         this.setState({ companies: companies });
       })
       .catch(err => console.log(`getAllCompanies err: ${err}`));
+  }
+
+  getCompanyProducts(company) {
+    console.log("getCompanyProducts company", company);
+    axios({
+      url: `http://localhost:8080/companies/${company}/products`
+    })
+      .then(response => {
+        // console.log("getCompanyProducts resp", response.data);
+        this.setState({ companyProducts: response.data });
+      })
+      .catch(err => console.log(`getCompanyProducts err: ${err}`));
   }
 
   // ----------------------------PRODUCTS----------------------------
@@ -327,7 +345,7 @@ class App extends Component {
 
   grabSearchResults(results) {
     // console.log("grabSearchResults results", results);
-    this.setState({ searchResults: results });
+    this.setState({ searchResults: results, navigateToResults: true });
   }
 
   // getInfo(category, name) {
@@ -381,6 +399,7 @@ class App extends Component {
               votes={this.state.votes}
               follows={this.state.follows}
               unfilteredFeatureList={this.state.unfilteredFeatureList}
+              navigateToResults={this.state.navigateToResults}
               // searchResults={this.state.searchResults}
             />
             <Switch>
@@ -409,6 +428,32 @@ class App extends Component {
                     {...props}
                     products={this.state.products}
                     unfilteredFeatureList={this.state.unfilteredFeatureList}
+                  />
+                )}
+              />
+
+              <Route
+                exact
+                path="/company/:name"
+                render={props => (
+                  <CompanyProducts
+                    {...props}
+                    // companies={this.state.companies}
+                    // products={this.state.products}
+                    companyProducts={this.state.companyProducts}
+                    getCompanyProducts={this.getCompanyProducts}
+                  />
+                )}
+              />
+
+              <Route
+                exact
+                path="/company"
+                render={props => (
+                  <CompanyList
+                    {...props}
+                    companies={this.state.companies}
+                    user={this.state.user}
                   />
                 )}
               />

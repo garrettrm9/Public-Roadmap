@@ -19,47 +19,54 @@ export default class NavBar extends Component {
 
   render() {
     return (
-      <Navbar>
-        <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>Roadmap</Navbar.Heading>
-          <Navbar.Divider />
-          <Link to="/home">
-            <Button className="bp3-minimal" icon="home" text="Home" />
-          </Link>
-          <Link to="/addFeature">
+      <div className="navbar">
+        <Navbar>
+          <Navbar.Group align={Alignment.LEFT}>
+            <Navbar.Heading>Roadmap</Navbar.Heading>
+            <Navbar.Divider />
+            <Link to="/home">
+              <Button className="bp3-minimal" icon="home" text="Home" />
+            </Link>
+            <Link to="/addFeature">
+              <Button
+                className="bp3-minimal"
+                icon="plus"
+                text="Feature request"
+              />
+            </Link>
+            <Link to="/product">
+              <Button className="bp3-minimal" icon="projects" text="Products" />
+            </Link>
+            <Link to="/company">
+              <Button
+                className="bp3-minimal"
+                icon="briefcase"
+                text="Companies"
+              />
+            </Link>
             <Button
               className="bp3-minimal"
-              icon="plus"
-              text="Add feature request"
+              icon="log-out"
+              text="Logout"
+              onClick={this.props.logout}
             />
-          </Link>
-          <Link to="/product">
-            <Button className="bp3-minimal" icon="projects" text="Products" />
-          </Link>
-          <Link to="/company">
-            <Button className="bp3-minimal" icon="briefcase" text="Companies" />
-          </Link>
-          <Button
-            className="bp3-minimal"
-            icon="log-out"
-            text="Logout"
-            onClick={this.props.logout}
-          />
-        </Navbar.Group>
-        <Navbar.Group align={Alignment.RIGHT}>
-          <Search
-            grabSearchResults={this.props.grabSearchResults}
-            user={this.props.user}
-            products={this.props.products}
-            companies={this.props.companies}
-            votes={this.props.votes}
-            follows={this.props.follows}
-            unfilteredFeatureList={this.props.unfilteredFeatureList}
-            getInfo={this.props.getInfo}
-            // searchResults={this.props.searchResults}
-          />
-        </Navbar.Group>
-      </Navbar>
+          </Navbar.Group>
+          <Navbar.Group align={Alignment.RIGHT}>
+            <Search
+              grabSearchResults={this.props.grabSearchResults}
+              user={this.props.user}
+              products={this.props.products}
+              companies={this.props.companies}
+              votes={this.props.votes}
+              follows={this.props.follows}
+              unfilteredFeatureList={this.props.unfilteredFeatureList}
+              navigateToResults={this.props.navigateToResults}
+              // getInfo={this.props.getInfo}
+              // searchResults={this.props.searchResults}
+            />
+          </Navbar.Group>
+        </Navbar>
+      </div>
     );
   }
 }
