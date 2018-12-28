@@ -19,33 +19,33 @@ export default class NavBar extends Component {
 
   render() {
     return (
-      <div className="navbar">
-        <Navbar>
+      <div>
+        <Navbar className="navbar">
           <Navbar.Group align={Alignment.LEFT}>
             <Navbar.Heading>Roadmap</Navbar.Heading>
             <Navbar.Divider />
             <Link to="/home">
-              <Button className="bp3-minimal" icon="home" text="Home" />
+              <Button className="bp3-minimal bp3-intent-warnings navButton" icon="home" text="Home" />
             </Link>
             <Link to="/addFeature">
               <Button
-                className="bp3-minimal"
+                className="bp3-minimal bp3-intent-warnings navButton"
                 icon="plus"
                 text="Feature request"
               />
             </Link>
             <Link to="/product">
-              <Button className="bp3-minimal" icon="projects" text="Products" />
+              <Button className="bp3-minimal bp3-intent-warnings navButton" icon="projects" text="Products" />
             </Link>
             <Link to="/company">
               <Button
-                className="bp3-minimal"
+                className="bp3-minimal bp3-intent-warnings navButton"
                 icon="briefcase"
                 text="Companies"
               />
             </Link>
             <Button
-              className="bp3-minimal"
+              className="bp3-minimal bp3-intent-warnings navButton"
               icon="log-out"
               text="Logout"
               onClick={this.props.logout}

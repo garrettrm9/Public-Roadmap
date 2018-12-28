@@ -41,7 +41,7 @@ export default class ProductFeatures extends Component {
       productFeatures = this.props.productFeatures.map(this.renderFeatures);
     }
     return (
-      <div className="featureCardsContainer">
+      <div>
         <h2>{this.state.productName} features:</h2>
         {productFeatures}
       </div>

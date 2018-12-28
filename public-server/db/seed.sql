@@ -22,8 +22,8 @@ INSERT INTO features (name, date_last_updated, product_name, user_email) VALUES
   ('More Kisses per bag', '2018-10-13', 'Hershey Kiss', 'test'),
   ('Itunes UI overhaul', '2018-10-29', 'Iphone', 'new'),
   ('Open source software', '2018-10-30', 'Apple Watch', 'test'),
-  ('Improved AI song suggestion', '2018-10-01', 'Radio station', 'new'),
-  ('Less battery drain', '2018-10-09', 'Mobile Spotify app', 'test');
+  ('Improved AI song suggestion', '2018-10-01', 'Radio station', 'new');
+  -- ('Less battery drain', '2018-10-09', 'Mobile Spotify app', 'test');
 
 INSERT INTO activities (type, feature_id, user_email) VALUES
   ('vote', 1, 'new'),
@@ -46,13 +46,13 @@ INSERT INTO activities (type, feature_id, user_email) VALUES
   ('vote', 4, 'user1'),
   ('vote', 5, 'new'),
   ('vote', 5, 'test'),
-  ('vote', 6, 'new'),
+  -- ('vote', 6, 'new'),
   ('follow', 1, 'new'),
   ('follow', 2, 'new'),
   ('follow', 3, 'new'),
   ('follow', 4, 'test'),
-  ('follow', 5, 'test'),
-  ('follow', 6, 'test');
+  ('follow', 5, 'test');
+  -- ('follow', 6, 'test');
 
 
 -- INSERT INTO follows (feature_id, user_id) VALUES

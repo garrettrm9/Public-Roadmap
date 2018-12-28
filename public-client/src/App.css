@@ -18,7 +18,7 @@
   padding-right: 20px;
   /*  padding-bottom: 20px;*/
 
-  text-align: right;
+  text-align: left;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -46,5 +46,22 @@
 }
 
 .navbar {
-  background-color: red;
+  background-color: gray;
+  color: white;
+}
+
+.navButton {
+  padding-right: 20px;
+  color: white;
+}
+
+.searchButton {
+  color: white;
+}
+
+.searchContainer {
+  display: flex;
+}
+.searchBox {
+  flex-direction: "row";
 }

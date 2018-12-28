@@ -142,7 +142,7 @@ export default class Search extends Component {
     //   maybeRedirect = this.goToResults();
     // }
     return (
-      <div className="bp3-input-group">
+      <div className="bp3-input-group searchContainer">
         <Icon className="bp3-icon" icon="search" />
         <input
           type="search"
@@ -150,14 +150,16 @@ export default class Search extends Component {
           placeholder="Search"
           onChange={this.handleInputChange}
         />
+        <div className="searchBox">
         <Link to="/results">
           <Button
-            className="bp3-minimal"
+            className="bp3-minimal bp3-intent-warnings searchButton"
             type="submit"
             icon="arrow-right"
             onClick={this.handleClick}
           />
         </Link>
+        </div>
       </div>
     );
   }
