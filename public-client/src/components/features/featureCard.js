@@ -155,9 +155,9 @@ export default class FeatureCard extends Component {
     const feature = this.props.feature;
     const date = feature.date_last_updated.split("T");
     return (
-      <div className="featureCards">
-        <Card
-          interactive={true}
+      <section className="card-content">
+        <div
+          // interactive={true}
           // elevation={Elevation.FOUR}
           className="bp3-card bp3-interactive"
         >
@@ -175,9 +175,9 @@ export default class FeatureCard extends Component {
           <Button active={feature.followActive} onClick={this.followClick}>
             Follow or die!
           </Button>
-        </Card>
+        </div>
         <div className="cardDivider" />
-      </div>
+      </section>
     );
   }
 }

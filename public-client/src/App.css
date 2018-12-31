@@ -1,27 +1,54 @@
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 
+body {
+  /*  width: 100%;
+  height: 100%;*/
+}
+
+.featureCardsContainer {
+  /*  padding-left: 20px;
+  padding-right: 20px;*/
+  /*  padding-bottom: 20px;*/
+
+  /*  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;*/
+  /*  background-color: #8e44ad;
+*/
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
 .featureCards {
-  /*  width: 25%;
-*/ /*  margin: auto;
+  /*  background-color: #fff;
+*/
+  min-width: 100%;
+  min-height: 200px;
+  display: flex;
+  overflow-x: auto;
+  /*  margin: auto;
 */
   /*  flex: 1;
 */
-  flex-direction: "row";
+  /*  flex-direction: "row";
+*/
+}
+
+.card-content {
+  /*  background-color: #e74c3c;
+*/
+
+  min-width: 250px;
+  margin: 5px;
 }
 
 .cardDivider {
   padding-bottom: 20px;
-}
-
-.featureCardsContainer {
-  padding-left: 20px;
-  padding-right: 20px;
-  /*  padding-bottom: 20px;*/
-
-  text-align: left;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .buttonDivider {
@@ -46,17 +73,17 @@
 }
 
 .navbar {
-  background-color: gray;
-  color: white;
+  background-color: #333d46;
+  color: aqua;
 }
 
 .navButton {
   padding-right: 20px;
-  color: white;
+  color: aqua;
 }
 
 .searchButton {
-  color: white;
+  color: aqua;
 }
 
 .searchContainer {
@@ -64,4 +91,25 @@
 }
 .searchBox {
   flex-direction: "row";
+}
+
+.navbarDivider {
+  color: white;
+}
+
+.authCard {
+  width: 25%;
+  /*  margin: auto;
+*/
+}
+
+.loginScreen {
+  padding-top: 200px;
+  /*  padding-right: 500px;
+*/
+  background-image: url("./Images/patrick-tomasso-151382-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  /*  height: 100%;
+*/
 }

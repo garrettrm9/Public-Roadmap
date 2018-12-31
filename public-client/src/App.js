@@ -26,7 +26,8 @@ import CompanyProducts from "./Components/companies/companyProducts";
 import ProductList from "./Components/screens/productList";
 import ProductFeatures from "./Components/products/productFeatures";
 import Login from "./Components/screens/login";
-import NavBar from "./Components/NavBar/navBar";
+import Register from "./Components/auth/register";
+import NavBar from "./Components/navBar/navBar";
 import AddFeature from "./Components/screens/addFeature";
 import ResultsBox from "./Components/screens/results/resultsBox";
 import "./App.css";
@@ -507,9 +508,23 @@ class App extends Component {
       );
     } else if (this.state.isLoggedIn === false) {
       return (
-        <div>
-          <Login login={this.login} register={this.register} />
-        </div>
+        <Router>
+          <div className="loginScreen">
+            <Switch>
+              <Route
+                exact
+                path="/register"
+                render={props => <Register register={this.register} />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={props => <Login login={this.login} />}
+              />
+              <Route path="/" render={() => <Redirect to="/login" />} />
+            </Switch>
+          </div>
+        </Router>
       );
     }
   }

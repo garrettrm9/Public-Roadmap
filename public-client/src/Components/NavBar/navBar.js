@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import AddFeatureForm from "./addFeatureForm";
 import Search from "./search";
-import { Alignment, Button, Navbar } from "@blueprintjs/core";
+import { Alignment, Button, Navbar, Divider } from "@blueprintjs/core";
 
 export default class NavBar extends Component {
   // constructor(props) {
@@ -23,9 +23,13 @@ export default class NavBar extends Component {
         <Navbar className="navbar">
           <Navbar.Group align={Alignment.LEFT}>
             <Navbar.Heading>Roadmap</Navbar.Heading>
-            <Navbar.Divider />
+            <Divider className="navbarDivider" />
             <Link to="/home">
-              <Button className="bp3-minimal bp3-intent-warnings navButton" icon="home" text="Home" />
+              <Button
+                className="bp3-minimal bp3-intent-warnings navButton"
+                icon="home"
+                text="Home"
+              />
             </Link>
             <Link to="/addFeature">
               <Button
@@ -35,7 +39,11 @@ export default class NavBar extends Component {
               />
             </Link>
             <Link to="/product">
-              <Button className="bp3-minimal bp3-intent-warnings navButton" icon="projects" text="Products" />
+              <Button
+                className="bp3-minimal bp3-intent-warnings navButton"
+                icon="projects"
+                text="Products"
+              />
             </Link>
             <Link to="/company">
               <Button

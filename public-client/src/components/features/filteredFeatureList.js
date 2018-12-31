@@ -68,6 +68,10 @@ export default class FilteredFeatureList extends Component {
     const featureCards = this.props.filteredResults.map(
       this.renderFeatureCards
     );
-    return <div className="featureCardsContainer">{featureCards}</div>;
+    return (
+      <div className="featureCardsContainer">
+        <div className="featureCards">{featureCards}</div>
+      </div>
+    );
   }
 }

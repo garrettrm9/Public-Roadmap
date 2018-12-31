@@ -9,7 +9,7 @@ export default class ProductCard extends Component {
   render() {
     const product = this.props.product;
     return (
-      <div className="featureCards">
+      <div>
         <Link to={`/product/${product.name}`}>
           <h3>{product.name}</h3>
         </Link>

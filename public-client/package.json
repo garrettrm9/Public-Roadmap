@@ -10,7 +10,8 @@
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "react-scroll-horizontal": "^1.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
