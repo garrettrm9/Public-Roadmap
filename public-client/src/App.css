@@ -47,6 +47,22 @@ body {
   margin: 5px;
 }
 
+.cardHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.cardImage {
+  /*  background-image: url("./Images/directions.jpg");
+  background-size: cover;
+  background-position: center;*/
+  width: 45%;
+  height: 45%;
+  margin-left: 20px;
+}
+
 .cardDivider {
   padding-bottom: 20px;
 }

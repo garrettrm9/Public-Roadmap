@@ -161,7 +161,10 @@ export default class FeatureCard extends Component {
           // elevation={Elevation.FOUR}
           className="bp3-card bp3-interactive"
         >
-          <h2>Name: {feature.name}</h2>
+          <section className="cardHeader">
+            <h2>Name: {feature.name}</h2>
+            <img className="cardImage" src={require("../../Images/directions.jpg")} />
+          </section>
           <h3>Product: {feature.product_name}</h3>
           <h3>Company: {feature.company_name}</h3>
           <h3>Proposed by: {feature.user_email}</h3>
