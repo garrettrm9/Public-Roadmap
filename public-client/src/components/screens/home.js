@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import FilteredFeatureList from "../features/filteredFeatureList";
-import { Button, Classes } from "@blueprintjs/core";
-import { Link } from "react-router-dom";
+import {
+  Button
+  // Classes
+} from "@blueprintjs/core";
+// import { Link } from "react-router-dom";
 
 export default class Home extends Component {
   constructor(props) {
@@ -47,6 +50,7 @@ export default class Home extends Component {
       if (follow.user_email === this.props.user.email) {
         featureIDs.push(follow.feature_id);
       }
+      return follow;
     });
     // console.log("sortByUserFollow featureIDs", featureIDs);
     const filteredFeatures = [];
@@ -55,7 +59,9 @@ export default class Home extends Component {
         if (feature.id === JSON.stringify(featureID)) {
           filteredFeatures.push(feature);
         }
+        return featureID;
       });
+      return feature;
     });
     // console.log("sortByUserFollow filteredFeatures", filteredFeatures);
     this.setState({ filteredResults: filteredFeatures });
@@ -102,24 +108,22 @@ export default class Home extends Component {
     // const features = this.props.features;
     return (
       <div>
-        <h3 className={Classes.HEADING}>Browse Feature Requests</h3>
-        <Button icon="log-out" text="Logout" onClick={this.props.logout} />
-        <div className="buttonDivider" />
-        <Button onClick={this.handleDateClicked}>Sort by date!</Button>
-        <Button onClick={this.handleVotesClicked}>Sort by votes!</Button>
-        <Button onClick={this.handleFollowClicked}>
-          See your followed features!
-        </Button>
         <br />
+        <h1 className="listHeader">Browse Feature Requests</h1>
+        <div className="buttonBox">
+          <Button onClick={this.handleDateClicked}>Sort by date!</Button>
+          <Button onClick={this.handleVotesClicked}>Sort by votes!</Button>
+          <Button onClick={this.handleFollowClicked}>
+            See your followed features!
+          </Button>
+        </div>
         <br />
-        <Link to="/product">
-          <Button> Product page</Button>
-        </Link>
         <FilteredFeatureList
           checkNewVotes={this.checkNewVotes}
           getAllFeatures={this.props.getAllFeatures}
           editFeature={this.props.editFeature}
-          getAllActivities={this.props.getAllActivities}
+          // getAllActivities={this.props.getAllActivities}
+          getUserActivities={this.props.getUserActivities}
           newActivity={this.props.newActivity}
           deleteActivity={this.props.deleteActivity}
           // sortByVotes={this.props.sortByVotes}

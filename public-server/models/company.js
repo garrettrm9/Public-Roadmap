@@ -14,6 +14,21 @@ company.getAllCompanies = (req, res, next) => {
     });
 };
 
+company.getAllProducts = (req, res, next) => {
+  db
+    .manyOrNone("SELECT * from products WHERE company_name=$1", [
+      req.params.company_name
+    ])
+    .then(products => {
+      res.locals.products = products;
+      next();
+    })
+    .catch(error => {
+      console.log("error from getAllProducts model", error);
+      next(error);
+    });
+};
+
 company.getOneCompany = (req, res, next) => {
   db
     .one("SELECT * FROM companies WHERE id=$1", [req.params.id])

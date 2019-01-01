@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@blueprintjs/core";
-import FeatureCard from "../features/featureCard";
+// import { Link } from "react-router-dom";
+// import { Button } from "@blueprintjs/core";
+import ProductFeatureCard from "./productFeatureCard";
 
 export default class ProductFeatures extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class ProductFeatures extends Component {
 
   renderFeatures(feature, index) {
     return (
-      <FeatureCard
+      <ProductFeatureCard
         key={index}
         feature={feature}
         products={this.props.products}
@@ -41,15 +41,9 @@ export default class ProductFeatures extends Component {
       productFeatures = this.props.productFeatures.map(this.renderFeatures);
     }
     return (
-      <div className="featureCardsContainer">
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
-        <Link to="/product">
-          <Button> Product page</Button>
-        </Link>
-        <h2>{this.state.productName} features:</h2>
-        {productFeatures}
+      <div>
+        <h1 className="listHeader">{this.state.productName} features:</h1>
+        <div className="productCardContainer">{productFeatures}</div>
       </div>
     );
   }

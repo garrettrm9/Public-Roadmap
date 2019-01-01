@@ -8,6 +8,29 @@ export default class FilteredFeatureList extends Component {
     this.renderFeatureCards = this.renderFeatureCards.bind(this);
   }
   renderFeatureCards(feature, index) {
+    feature.userVote = false;
+    feature.userFollow = false;
+
+    const votes = this.props.votes;
+
+    for (var i = 0; i < votes.length; i++) {
+      const voteID = JSON.stringify(votes[i].feature_id);
+      if (voteID === feature.id) {
+        feature.userVote = true;
+        break;
+      }
+    }
+
+    const follows = this.props.follows;
+
+    for (var x = 0; x < follows.length; x++) {
+      const followID = JSON.stringify(follows[x].feature_id);
+      if (followID === feature.id) {
+        feature.userFollow = true;
+        break;
+      }
+    }
+
     return (
       <FeatureCard
         key={index}
@@ -26,6 +49,10 @@ export default class FilteredFeatureList extends Component {
     const featureCards = this.props.filteredResults.map(
       this.renderFeatureCards
     );
-    return <div className="featureCardsContainer">{featureCards}</div>;
+    return (
+      <div className="featureCardsContainer">
+        <div className="featureCards">{featureCards}</div>
+      </div>
+    );
   }
 }

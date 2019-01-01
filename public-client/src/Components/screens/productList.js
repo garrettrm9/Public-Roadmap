@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@blueprintjs/core";
+// import { Link } from "react-router-dom";
+// import { Button } from "@blueprintjs/core";
 import ProductCard from "../products/productCard";
 
 export default class ProductList extends Component {
@@ -23,10 +23,7 @@ export default class ProductList extends Component {
     const products = this.props.products.map(this.renderProducts);
     return (
       <div>
-        <Link to="/home">
-          <Button>Home</Button>
-        </Link>
-        <h1>Product</h1>
+        <h1 className="listHeader">Products</h1>
         {products}
       </div>
     );

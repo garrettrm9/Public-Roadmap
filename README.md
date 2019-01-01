@@ -8,6 +8,8 @@
 4. Deleted votes don't re-render vote tally on FE
 5. Add new feature does not re-render feature list on FE
 6. Product picker icon on add feature input not working
+7. Filtering features on Home screen by user follow, then switching back to sort by vote, re-renders all features but with empty vote tallies
+
 
 ##Later fixes
 

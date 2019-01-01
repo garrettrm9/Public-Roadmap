@@ -6,6 +6,11 @@ router.get("/", company.getAllCompanies, (req, res) => {
   res.json(companies);
 });
 
+router.get("/:company_name/products", company.getAllProducts, (req, res) => {
+  const { products } = res.locals;
+  res.json(products);
+});
+
 router.get("/:id", company.getOneCompany, (req, res) => {
   const { company } = res.locals;
   res.json(company);

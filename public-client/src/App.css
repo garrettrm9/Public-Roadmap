@@ -1,26 +1,197 @@
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 
-.featureCards {
-  width: 25%;
-  margin: auto;
+body {
+  font-family: "Roboto Mono", monospace;
 }
 
-.cardDivider {
-  padding-bottom: 25px;
+.buttonBox {
+  text-align: right;
+}
+.productCardContainer {
+  padding-left: 20px;
+  display: flex;
+  overflow-x: auto;
+}
+
+.productCard {
+  min-width: 25%;
+  max-width: 25%;
+  /*  margin: auto;*/
+  /*  padding-left: 20px;*/
+  padding-right: 20px;
 }
 
 .featureCardsContainer {
-  text-align: center;
+  padding-left: 20px;
+  /*  padding-right: 20px;*/
+  /*  padding-bottom: 20px;*/
+
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.featureCards {
+  min-width: 100%;
+  min-height: 200px;
+  display: flex;
+  overflow-x: auto;
+
+  /*  margin: auto;
+  /*  flex: 1;
+  /*  flex-direction: "row";
+*/
+}
+
+.card-content {
+  min-width: 25%;
+  max-width: 25%;
+  margin: 5px;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  text-decoration: underline;
+}
+
+.cardImage {
+  width: 45%;
+  height: 45%;
+  margin-left: 20px;
+}
+
+.cardSectionHeader {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.cardDivider {
+  padding-bottom: 20px;
 }
 
 .buttonDivider {
   padding-bottom: 15px;
 }
 
-.loginDivider {
-  padding-bottom: 25px;
+.resultCategory {
+  /*  padding-top: 50px;
+*/
 }
 
-.loginDivider2 {
-  padding-bottom: 75px;
+.noBreak {
+  white-space: nowrap;
+}
+
+.navbar {
+  background-color: #333d46;
+  color: aqua;
+}
+
+.navButton {
+  padding-right: 20px;
+  color: aqua;
+}
+
+.searchButton {
+  color: aqua;
+}
+
+.searchContainer {
+  display: flex;
+}
+.searchBox {
+  flex-direction: "row";
+}
+
+.navbarDivider {
+  color: white;
+}
+
+.listHeader {
+  padding-left: 25px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.resultsHeader {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.authCard {
+  margin-left: 985px;
+  width: 25%;
+  align-items: right;
+  /*  margin: auto;
+*/
+}
+
+.loginScreen {
+  padding-top: 1px;
+  /*  padding-right: 500px;
+*/
+
+  font-family: "Roboto Mono", monospace;
+
+  background-image: url("./Images/background.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  /*  background-position: center;
+*/ /*  height: 100%;
+*/
+}
+
+.loginHeader {
+  font-size: 75px;
+  margin-left: 1000px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.loginSubheader {
+  margin-left: 1000px;
+}
+
+.loginDivider {
+  padding-top: 50px;
+}
+
+.loginFooter {
+  padding-top: 135px;
+}
+
+.addFeatureContainer {
+  padding-left: 25px;
+  /*  padding-top: 25px;
+*/
+}
+
+.addFeatureHeader {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.addFeatureHeader {
+  text-decoration: underline;
+  font-weight: bold;
+  padding-bottom: 15px;
+}
+
+.addFeaturePopover {
+  padding-left: 25px;
+}
+
+.resultsContainer {
+  padding-left: 25px;
+}
+
+.resultsCategory {
+  text-decoration: underline;
+  font-weight: bold;
 }

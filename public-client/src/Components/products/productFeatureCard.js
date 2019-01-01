@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { Button } from "@blueprintjs/core";
 
-export default class FeatureCard extends Component {
+export default class ProductFeatureCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       companyName: "",
       userVote: this.props.feature.userVote,
       userFollow: this.props.feature.userFollow
-      // vote: "",
-      // follow: ""
     };
 
     this.voteClick = this.voteClick.bind(this);
@@ -69,17 +67,17 @@ export default class FeatureCard extends Component {
   //   this.setState({ followActive: this.props.feature.userFollow });
   // }
 
-  // componentDidMount() {
-  //   this.checkForVote();
-  //   this.checkForFollow();
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.feature.length !== prevProps.feature.length) {
+  //     this.checkForVote();
+  //   }
   // }
 
   render() {
-    // console.log("FeatureCard render", this.props.feature);
     const feature = this.props.feature;
     const date = feature.date_last_updated.split("T");
     return (
-      <section className="card-content">
+      <div className="productCard">
         <div
           // interactive={true}
           // elevation={Elevation.FOUR}
@@ -105,19 +103,15 @@ export default class FeatureCard extends Component {
           <p>{feature.votes}</p>
           <h3 className="cardSectionHeader">Last updated:</h3>
           <p>{date[0]}</p>
-          <Button
-            text={feature.userVote ? "Unvote" : "Vote"}
-            onClick={this.voteClick}
-            active={feature.userVote}
-          />
-          <Button
-            text={feature.userFollow ? "Unfollow" : "Follow"}
-            onClick={this.followClick}
-            active={feature.userFollow}
-          />
+          <Button active={feature.votesActive} onClick={this.voteClick}>
+            Vote!
+          </Button>
+          <Button active={feature.followActive} onClick={this.followClick}>
+            Follow!
+          </Button>
         </div>
         <div className="cardDivider" />
-      </section>
+      </div>
     );
   }
 }
