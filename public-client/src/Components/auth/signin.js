@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Register from "./register";
+// import Register from "./register";
 import { Link } from "react-router-dom";
 import { InputGroup, FormGroup, Button, Card } from "@blueprintjs/core";
 

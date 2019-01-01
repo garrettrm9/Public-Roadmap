@@ -10,9 +10,9 @@ export default class ResultCategory extends Component {
     this.renderResults = this.renderResults.bind(this);
   }
 
-  renderResults(results, index) {
+  renderResults(result, index) {
     return (
-      <Results key={index} results={results} category={this.state.category} />
+      <Results key={index} result={result} category={this.state.category} />
     );
   }
 
@@ -28,7 +28,7 @@ export default class ResultCategory extends Component {
     if (results.results.length > 0) {
       maybeRender = (
         <div>
-          <h4>{this.state.category}</h4>
+          <h3 className="resultsCategory">{this.state.category}:</h3>
           {results.results.map(this.renderResults)}
         </div>
       );

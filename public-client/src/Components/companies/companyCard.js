@@ -10,9 +10,13 @@ export default class CompanyCard extends Component {
     const company = this.props.company;
     return (
       <div>
-        <Link to={`/company/${company.name}`}>
-          <h3>{company.name}</h3>
-        </Link>
+        <ul>
+          <Link to={`/company/${company.name}`}>
+            <h3>
+              <li>{company.name}</li>
+            </h3>
+          </Link>
+        </ul>
       </div>
     );
   }

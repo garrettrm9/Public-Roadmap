@@ -110,15 +110,15 @@ export default class Search extends Component {
 
     const companies = {};
     companies.results = this.props.companies;
-    companies.category = "companies";
+    companies.category = "Companies";
 
     const products = {};
     products.results = this.props.products;
-    products.category = "products";
+    products.category = "Products";
 
     const features = {};
     features.results = this.props.unfilteredFeatureList;
-    features.category = "features";
+    features.category = "Features";
 
     list.push(companies, products, features);
     // console.log("handleClick list", list);
@@ -151,14 +151,14 @@ export default class Search extends Component {
           onChange={this.handleInputChange}
         />
         <div className="searchBox">
-        <Link to="/results">
-          <Button
-            className="bp3-minimal bp3-intent-warnings searchButton"
-            type="submit"
-            icon="arrow-right"
-            onClick={this.handleClick}
-          />
-        </Link>
+          <Link to="/results">
+            <Button
+              className="bp3-minimal bp3-intent-warnings searchButton"
+              type="submit"
+              icon="arrow-right"
+              onClick={this.handleClick}
+            />
+          </Link>
         </div>
       </div>
     );

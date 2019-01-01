@@ -15,7 +15,7 @@ export default class CompanyList extends Component {
     const companies = this.props.companies.map(this.renderCompanies);
     return (
       <div>
-        <h1>Company list</h1>
+        <h1 className="listHeader">Companies</h1>
         {companies}
       </div>
     );

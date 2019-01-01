@@ -42,8 +42,8 @@ export default class ProductFeatures extends Component {
     }
     return (
       <div>
-        <h2>{this.state.productName} features:</h2>
-        {productFeatures}
+        <h1 className="listHeader">{this.state.productName} features:</h1>
+        <div className="productCardContainer">{productFeatures}</div>
       </div>
     );
   }

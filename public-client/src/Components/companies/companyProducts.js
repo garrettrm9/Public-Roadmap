@@ -24,7 +24,7 @@ export default class CompanyProducts extends Component {
     }
     return (
       <div>
-        <h2>{this.state.companyName} products:</h2>
+        <h1 className="listHeader">{this.state.companyName} products:</h1>
         {companyProducts}
       </div>
     );

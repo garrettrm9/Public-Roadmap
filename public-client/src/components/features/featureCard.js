@@ -1,154 +1,78 @@
 import React, { Component } from "react";
-import { Button, Card } from "@blueprintjs/core";
+import { Button } from "@blueprintjs/core";
 
 export default class FeatureCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       companyName: "",
-      votesActive: this.props.feature.votesActive,
-      followActive: this.props.feature.followActive
+      userVote: this.props.feature.userVote,
+      userFollow: this.props.feature.userFollow
       // vote: "",
       // follow: ""
     };
 
     this.voteClick = this.voteClick.bind(this);
     this.followClick = this.followClick.bind(this);
-    this.checkForVote = this.checkForVote.bind(this);
-    this.checkForFollow = this.checkForFollow.bind(this);
+    // this.checkForVote = this.checkForVote.bind(this);
+    // this.checkForFollow = this.checkForFollow.bind(this);
   }
 
   voteClick() {
-    if (this.state.votesActive === false) {
+    const feature = this.props.feature;
+    if (feature.userVote === false) {
       this.props.newActivity(
         this.props.feature.id,
         this.props.user.email,
         "vote"
       );
-      this.setState({ votesActive: true });
-    } else if (this.state.votesActive === true) {
+      this.setState({ votesActive: feature.userVote });
+    } else if (feature.userVote === true) {
       this.props.deleteActivity(
         this.props.feature.id,
         this.props.user.email,
         "vote"
       );
-      this.setState({ votesActive: false });
+      this.setState({ votesActive: feature.userVote });
     }
   }
 
   followClick() {
-    if (this.state.followActive === false) {
+    const feature = this.props.feature;
+    if (feature.userFollow === false) {
       this.props.newActivity(
         this.props.feature.id,
         this.props.user.email,
         "follow"
       );
-      this.setState({ followActive: true });
-    } else if (this.state.followActive === true) {
+      this.setState({ followActive: feature.userFollow });
+    } else if (feature.userFollow === true) {
       this.props.deleteActivity(
         this.props.feature.id,
         this.props.user.email,
         "follow"
       );
-      this.setState({ followActive: false });
+      this.setState({ followActive: feature.userFollow });
     }
   }
 
-  checkForVote() {
-    console.log("checkForVote userVote prop", this.props.feature.userVote);
-    this.setState({ votesActive: this.props.feature.userVote });
-    // const products = this.props.products;
-    // for (var i = 0; i < products.length; i++) {
-    //   if (this.props.feature.product_name === products[i].name) {
-    //     // console.log("logic check product company name", products[i].company_name)
-    //     this.setState({ companyName: products[i].company_name });
-    //     break;
-    //   }
-    // }
-    // const votes = this.props.votes;
-    // // console.log("card votes", votes)
-    // for (var x = 0; x < votes.length; x++) {
-    //   const voteFeatureID = JSON.stringify(votes[x].feature_id);
-    //   // console.log("votes[i].feature_id", votes[x].feature_id)
-    //   // console.log("voteFeatureID", voteFeatureID)
-    //   // console.log("this.props.feature.id", this.props.feature.id)
-    //   if (
-    //     voteFeatureID === this.props.feature.id &&
-    //     votes[x].user_email === this.props.user.email &&
-    //     votes[x].type === "vote"
-    //   ) {
-    //     this.setState({ votesActive: true });
-    //     this.setState({ vote: votes[x] });
-    //     break;
-    //   }
-    // }
-  }
+  // checkForVote() {
+  //   console.log("checkForVote userVote prop", this.props.feature.userVote);
+  //   this.setState({ votesActive: this.props.feature.userVote });
+  // }
 
-  checkForFollow() {
-    console.log(
-      "checkForFollow userFollow prop",
-      this.props.feature.userFollow
-    );
-    this.setState({ followActive: this.props.feature.userFollow });
-    // const products = this.props.products;
-    // for (var i = 0; i < products.length; i++) {
-    //   if (this.props.feature.product_name === products[i].name) {
-    //     // console.log("logic check product company name", products[i].company_name)
-    //     this.setState({ companyName: products[i].company_name });
-    //     break;
-    //   }
-    // }
-    // const follows = this.props.follows;
-    // // console.log("card votes", votes)
-    // for (var x = 0; x < follows.length; x++) {
-    //   const followFeatureID = JSON.stringify(follows[x].feature_id);
-    //   // console.log("follows[i].feature_id", follows[x].feature_id)
-    //   // console.log("followFeatureID", followFeatureID)
-    //   // console.log("this.props.feature.id", this.props.feature.id)
-    //   if (
-    //     followFeatureID === this.props.feature.id &&
-    //     follows[x].user_email === this.props.user.email &&
-    //     follows[x].type === "follow"
-    //   ) {
-    //     this.setState({ followActive: true });
-    //     this.setState({ follow: follows[x] });
-    //     break;
-    //   }
-    // }
-  }
+  // checkForFollow() {
+  //   console.log(
+  //     "checkForFollow userFollow prop",
+  //     this.props.feature.userFollow
+  //   );
+  //   this.setState({ followActive: this.props.feature.userFollow });
+  // }
 
   // componentDidMount() {
   //   this.checkForVote();
   //   this.checkForFollow();
-  // console.log("FeatureCard votes", this.props.votes);
-  // console.log("FeatureCard follows", this.props.follows);
   // }
-
-  componentDidUpdate(prevProps, prevState) {
-    //   console.log("featureCard update props", this.props.feature.userVote);
-    //   console.log("featureCard update prevProps", prevProps.feature.userVote);
-    if (
-      this.props.feature.length !== prevProps.feature.length
-      // || this.props.feature.userFollow !== prevProps.feature.userFollow
-    ) {
-      this.checkForVote();
-      //     this.checkForFollow();
-      //     // } else if (this.props.feature.userVote !== prevProps.feature.userVote) {
-      //     //     this.checkForVote();
-      //     //   } else if (this.props.feature.userFollow !== prevProps.feature.userFollow) {
-      //     //     this.checkForFollow();
-      //     //   } else {
-      //     //     console.log("FeatureCard update nope");
-      //     //   }
-      //     //   // if (this.props.votes.length > 0) {
-      //     //   //   console.log("votes", this.props.votes);
-      //     //   // } else
-      //     //   if (this.props.follows.length > 0) {
-      //     //     console.log("follows", this.props.follows);
-      //   } else {
-      //     console.log("nope");
-    }
-  }
 
   render() {
     // console.log("FeatureCard render", this.props.feature);
@@ -166,6 +90,7 @@ export default class FeatureCard extends Component {
             <img
               className="cardImage"
               src={require("../../Images/directions.jpg")}
+              alt="roadmap"
             />
           </section>
           <h3 className="cardSectionHeader">Product:</h3>
@@ -180,12 +105,16 @@ export default class FeatureCard extends Component {
           <p>{feature.votes}</p>
           <h3 className="cardSectionHeader">Last updated:</h3>
           <p>{date[0]}</p>
-          <Button active={feature.votesActive} onClick={this.voteClick}>
-            Vote!
-          </Button>
-          <Button active={feature.followActive} onClick={this.followClick}>
-            Follow!
-          </Button>
+          <Button
+            text={feature.userVote ? "Unvote" : "Vote"}
+            onClick={this.voteClick}
+            active={feature.userVote}
+          />
+          <Button
+            text={feature.userFollow ? "Unfollow" : "Follow"}
+            onClick={this.followClick}
+            active={feature.userFollow}
+          />
         </div>
         <div className="cardDivider" />
       </section>

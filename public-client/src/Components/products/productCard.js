@@ -10,9 +10,13 @@ export default class ProductCard extends Component {
     const product = this.props.product;
     return (
       <div>
-        <Link to={`/product/${product.name}`}>
-          <h3>{product.name}</h3>
-        </Link>
+        <ul>
+          <Link to={`/product/${product.name}`}>
+            <h3>
+              <li>{product.name}</li>
+            </h3>
+          </Link>
+        </ul>
       </div>
     );
   }

@@ -64,9 +64,9 @@ export default class AddFeatureForm extends Component {
   render() {
     const productNames = this.props.products.map(this.renderProducts);
     return (
-      <div>
-        <h4 className="bp3-heading">Submit feature request</h4>
-        <h4>As much detail as possible!</h4>
+      <div className="addFeatureContainer">
+        <h1 className="addFeatureHeader">Submit feature request</h1>
+        <h2>As much detail as possible!</h2>
         <div>
           <Label>
             Name:
@@ -80,9 +80,10 @@ export default class AddFeatureForm extends Component {
             />
           </Label>
         </div>
-        <div className="bp3-select">
+        <div>
           <Label>
             Product:
+            <br />
             <select
               onChange={this.changeHandler}
               name="product_name"

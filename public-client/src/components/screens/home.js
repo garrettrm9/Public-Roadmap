@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import FilteredFeatureList from "../features/filteredFeatureList";
-import { Button, Classes } from "@blueprintjs/core";
+import {
+  Button
+  // Classes
+} from "@blueprintjs/core";
 // import { Link } from "react-router-dom";
 
 export default class Home extends Component {
@@ -106,7 +109,7 @@ export default class Home extends Component {
     return (
       <div>
         <br />
-        <h1 className={Classes.HEADING}>Browse Feature Requests</h1>
+        <h1 className="listHeader">Browse Feature Requests</h1>
         <div className="buttonBox">
           <Button onClick={this.handleDateClicked}>Sort by date!</Button>
           <Button onClick={this.handleVotesClicked}>Sort by votes!</Button>

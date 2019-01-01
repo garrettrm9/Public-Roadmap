@@ -387,124 +387,126 @@ class App extends Component {
   render() {
     if (this.state.isLoggedIn === true) {
       return (
-        <Router>
-          <body>
-            <NavBar
-              addFeature={this.addFeature}
-              logout={this.logout}
-              grabSearchResults={this.grabSearchResults}
-              // getInfo={this.getInfo}
-              user={this.state.user}
-              products={this.state.products}
-              companies={this.state.companies}
-              votes={this.state.votes}
-              follows={this.state.follows}
-              unfilteredFeatureList={this.state.unfilteredFeatureList}
-              navigateToResults={this.state.navigateToResults}
-              // searchResults={this.state.searchResults}
-            />
-            <Switch>
-              <Route
-                exact
-                path="/product/:name"
-                render={props => (
-                  <ProductFeatures
-                    {...props}
-                    productFeatures={this.state.productFeatures}
-                    getAllProductFeatures={this.getAllProductFeatures}
-                    products={this.state.products}
-                    votes={this.state.votes}
-                    follows={this.state.follows}
-                    user={this.state.user}
-                    newActivity={this.newActivity}
-                    deleteActivity={this.deleteActivity}
-                  />
-                )}
+        <div>
+          <Router>
+            <div>
+              <NavBar
+                addFeature={this.addFeature}
+                logout={this.logout}
+                grabSearchResults={this.grabSearchResults}
+                // getInfo={this.getInfo}
+                user={this.state.user}
+                products={this.state.products}
+                companies={this.state.companies}
+                votes={this.state.votes}
+                follows={this.state.follows}
+                unfilteredFeatureList={this.state.unfilteredFeatureList}
+                navigateToResults={this.state.navigateToResults}
+                // searchResults={this.state.searchResults}
               />
-              <Route
-                exact
-                path="/product"
-                render={props => (
-                  <ProductList
-                    {...props}
-                    products={this.state.products}
-                    unfilteredFeatureList={this.state.unfilteredFeatureList}
-                  />
-                )}
-              />
+              <Switch>
+                <Route
+                  exact
+                  path="/product/:name"
+                  render={props => (
+                    <ProductFeatures
+                      {...props}
+                      productFeatures={this.state.productFeatures}
+                      getAllProductFeatures={this.getAllProductFeatures}
+                      products={this.state.products}
+                      votes={this.state.votes}
+                      follows={this.state.follows}
+                      user={this.state.user}
+                      newActivity={this.newActivity}
+                      deleteActivity={this.deleteActivity}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/product"
+                  render={props => (
+                    <ProductList
+                      {...props}
+                      products={this.state.products}
+                      unfilteredFeatureList={this.state.unfilteredFeatureList}
+                    />
+                  )}
+                />
 
-              <Route
-                exact
-                path="/company/:name"
-                render={props => (
-                  <CompanyProducts
-                    {...props}
-                    // companies={this.state.companies}
-                    // products={this.state.products}
-                    companyProducts={this.state.companyProducts}
-                    getCompanyProducts={this.getCompanyProducts}
-                  />
-                )}
-              />
+                <Route
+                  exact
+                  path="/company/:name"
+                  render={props => (
+                    <CompanyProducts
+                      {...props}
+                      // companies={this.state.companies}
+                      // products={this.state.products}
+                      companyProducts={this.state.companyProducts}
+                      getCompanyProducts={this.getCompanyProducts}
+                    />
+                  )}
+                />
 
-              <Route
-                exact
-                path="/company"
-                render={props => (
-                  <CompanyList
-                    {...props}
-                    companies={this.state.companies}
-                    user={this.state.user}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/addFeature"
-                render={props => (
-                  <AddFeature
-                    {...props}
-                    addFeature={this.addFeature}
-                    products={this.state.products}
-                    user={this.state.user}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/results"
-                render={props => (
-                  <ResultsBox
-                    {...props}
-                    searchResults={this.state.searchResults}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/home"
-                render={props => (
-                  <Home
-                    {...props}
-                    getAllFeatures={this.getAllFeatures}
-                    addFeature={this.addFeature}
-                    // getAllActivities={this.getAllActivities}
-                    getUserActivities={this.getUserActivities}
-                    newActivity={this.newActivity}
-                    deleteActivity={this.deleteActivity}
-                    // seeUserFollows={this.seeUserFollows}
-                    products={this.state.products}
-                    unfilteredFeatureList={this.state.unfilteredFeatureList}
-                    user={this.state.user}
-                    votes={this.state.votes}
-                    follows={this.state.follows}
-                  />
-                )}
-              />
-              <Route path="/" render={() => <Redirect to="/home" />} />
-            </Switch>
-          </body>
-        </Router>
+                <Route
+                  exact
+                  path="/company"
+                  render={props => (
+                    <CompanyList
+                      {...props}
+                      companies={this.state.companies}
+                      user={this.state.user}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/addFeature"
+                  render={props => (
+                    <AddFeature
+                      {...props}
+                      addFeature={this.addFeature}
+                      products={this.state.products}
+                      user={this.state.user}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/results"
+                  render={props => (
+                    <ResultsBox
+                      {...props}
+                      searchResults={this.state.searchResults}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/home"
+                  render={props => (
+                    <Home
+                      {...props}
+                      getAllFeatures={this.getAllFeatures}
+                      addFeature={this.addFeature}
+                      // getAllActivities={this.getAllActivities}
+                      getUserActivities={this.getUserActivities}
+                      newActivity={this.newActivity}
+                      deleteActivity={this.deleteActivity}
+                      // seeUserFollows={this.seeUserFollows}
+                      products={this.state.products}
+                      unfilteredFeatureList={this.state.unfilteredFeatureList}
+                      user={this.state.user}
+                      votes={this.state.votes}
+                      follows={this.state.follows}
+                    />
+                  )}
+                />
+                <Route path="/" render={() => <Redirect to="/home" />} />
+              </Switch>
+            </div>
+          </Router>
+        </div>
       );
     } else if (this.state.isLoggedIn === false) {
       return (

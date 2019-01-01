@@ -23,7 +23,7 @@ export default class ProductList extends Component {
     const products = this.props.products.map(this.renderProducts);
     return (
       <div>
-        <h1>Product</h1>
+        <h1 className="listHeader">Products</h1>
         {products}
       </div>
     );
