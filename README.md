@@ -12,5 +12,5 @@
 
 
 ##Later fixes
-
+1. Use dynamic className for productFeatureCard (using featureCard) instead of its own component
 <!-- 1. Change specific "add vote" function on backend to only update votes (UPDATE: no longer relevant)-->
