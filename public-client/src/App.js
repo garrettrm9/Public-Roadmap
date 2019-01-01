@@ -388,7 +388,7 @@ class App extends Component {
     if (this.state.isLoggedIn === true) {
       return (
         <Router>
-          <div>
+          <body>
             <NavBar
               addFeature={this.addFeature}
               logout={this.logout}
@@ -503,13 +503,13 @@ class App extends Component {
               />
               <Route path="/" render={() => <Redirect to="/home" />} />
             </Switch>
-          </div>
+          </body>
         </Router>
       );
     } else if (this.state.isLoggedIn === false) {
       return (
-        <Router>
-          <div className="loginScreen">
+        <div className="loginScreen">
+          <Router>
             <Switch>
               <Route
                 exact
@@ -523,8 +523,8 @@ class App extends Component {
               />
               <Route path="/" render={() => <Redirect to="/login" />} />
             </Switch>
-          </div>
-        </Router>
+          </Router>
+        </div>
       );
     }
   }

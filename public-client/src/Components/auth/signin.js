@@ -40,7 +40,6 @@ export default class Signin extends Component {
           className="bp3-card bp3-interactive"
         >
           <FormGroup>
-            <h3>login</h3>
             <InputGroup
               leftIcon="envelope"
               placeholder="Email"
@@ -48,7 +47,7 @@ export default class Signin extends Component {
               onChange={this.handleChange}
               autoComplete="off"
             />
-            <div className="loginDivider" />
+            <div className="buttonDivider" />
             <InputGroup
               leftIcon="key"
               placeholder="Password"
@@ -58,8 +57,9 @@ export default class Signin extends Component {
             />
             <div className="buttonDivider" />
             <Button icon="log-in" text="Login" onClick={this.handleLogin} />
-            <div className="loginDivider2" />
+            <div className="buttonDivider" />
           </FormGroup>
+          <p>New user?</p>
           <Link to="/register">
             <Button icon="key-enter" text="Register" />
           </Link>

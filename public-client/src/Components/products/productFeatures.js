@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import { Link } from "react-router-dom";
 // import { Button } from "@blueprintjs/core";
-import FeatureCard from "../features/featureCard";
+import ProductFeatureCard from "./productFeatureCard";
 
 export default class ProductFeatures extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class ProductFeatures extends Component {
 
   renderFeatures(feature, index) {
     return (
-      <FeatureCard
+      <ProductFeatureCard
         key={index}
         feature={feature}
         products={this.props.products}

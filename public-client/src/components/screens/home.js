@@ -105,13 +105,15 @@ export default class Home extends Component {
     // const features = this.props.features;
     return (
       <div>
-        <h3 className={Classes.HEADING}>Browse Feature Requests</h3>
-        <Button onClick={this.handleDateClicked}>Sort by date!</Button>
-        <Button onClick={this.handleVotesClicked}>Sort by votes!</Button>
-        <Button onClick={this.handleFollowClicked}>
-          See your followed features!
-        </Button>
         <br />
+        <h1 className={Classes.HEADING}>Browse Feature Requests</h1>
+        <div className="buttonBox">
+          <Button onClick={this.handleDateClicked}>Sort by date!</Button>
+          <Button onClick={this.handleVotesClicked}>Sort by votes!</Button>
+          <Button onClick={this.handleFollowClicked}>
+            See your followed features!
+          </Button>
+        </div>
         <br />
         <FilteredFeatureList
           checkNewVotes={this.checkNewVotes}

@@ -162,21 +162,29 @@ export default class FeatureCard extends Component {
           className="bp3-card bp3-interactive"
         >
           <section className="cardHeader">
-            <h2>Name: {feature.name}</h2>
-            <img className="cardImage" src={require("../../Images/directions.jpg")} />
+            <h2 className="cardSectionHeader">{feature.name}</h2>
+            <img
+              className="cardImage"
+              src={require("../../Images/directions.jpg")}
+            />
           </section>
-          <h3>Product: {feature.product_name}</h3>
-          <h3>Company: {feature.company_name}</h3>
-          <h3>Proposed by: {feature.user_email}</h3>
-          <h4>id: {feature.id}</h4>
-          <h4>Purpose: {feature.purpose}</h4>
-          <h4>Votes: {feature.votes}</h4>
-          <h4>Last updated: {date[0]}</h4>
+          <h3 className="cardSectionHeader">Product:</h3>
+          <p>{feature.product_name}</p>
+          <h3 className="cardSectionHeader">Company:</h3>
+          <p>{feature.company_name}</p>
+          <h3 className="cardSectionHeader">Proposed by:</h3>
+          <p>{feature.user_email}</p>
+          <h3 className="cardSectionHeader">Purpose:</h3>
+          <p>{feature.purpose}</p>
+          <h3 className="cardSectionHeader">Votes:</h3>
+          <p>{feature.votes}</p>
+          <h3 className="cardSectionHeader">Last updated:</h3>
+          <p>{date[0]}</p>
           <Button active={feature.votesActive} onClick={this.voteClick}>
-            Vote or die!
+            Vote!
           </Button>
           <Button active={feature.followActive} onClick={this.followClick}>
-            Follow or die!
+            Follow!
           </Button>
         </div>
         <div className="cardDivider" />

@@ -3,7 +3,7 @@ import Signin from "../auth/signin";
 // import Register from "../auth/register";
 // import { InputGroup, FormGroup, Button } from "@blueprintjs/core";
 
-class Login extends Component {
+export default class Login extends Component {
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -42,10 +42,17 @@ class Login extends Component {
   render() {
     return (
       <div>
+        <h1 className="loginHeader">
+          Public <br /> Roadmap
+        </h1>
+        <h2 className="loginSubheader">Mapping out the future</h2>
+        <div className="loginDivider" />
         <Signin login={this.props.login} />
+        <div className="loginFooter" />
+        <a href="https://www.freepik.com/free-vector/abstract-halftone-white-background-design_3086384.htm">
+          Designed by Starline
+        </a>
       </div>
     );
   }
 }
-
-export default Login;
