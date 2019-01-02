@@ -5,11 +5,8 @@ export default class FeatureCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      companyName: "",
-      userVote: this.props.feature.userVote,
-      userFollow: this.props.feature.userFollow
-      // vote: "",
-      // follow: ""
+      userVote: this.props.userVote,
+      userFollow: this.props.userFollow
     };
 
     this.voteClick = this.voteClick.bind(this);
@@ -26,14 +23,20 @@ export default class FeatureCard extends Component {
         this.props.user.email,
         "vote"
       );
-      this.setState({ votesActive: feature.userVote });
+      feature.userVote = true;
+      this.props.getAllFeatures();
+      this.props.getUserActivities();
+      // this.forceUpdate();
     } else if (feature.userVote === true) {
       this.props.deleteActivity(
         this.props.feature.id,
         this.props.user.email,
         "vote"
       );
-      this.setState({ votesActive: feature.userVote });
+      feature.userVote = false;
+      this.props.getAllFeatures();
+      this.props.getUserActivities();
+      // this.forceUpdate();
     }
   }
 
@@ -45,14 +48,20 @@ export default class FeatureCard extends Component {
         this.props.user.email,
         "follow"
       );
-      this.setState({ followActive: feature.userFollow });
+      feature.userFollow = true;
+      this.props.getAllFeatures();
+      this.props.getUserActivities();
+      // this.forceUpdate();
     } else if (feature.userFollow === true) {
       this.props.deleteActivity(
         this.props.feature.id,
         this.props.user.email,
         "follow"
       );
-      this.setState({ followActive: feature.userFollow });
+      feature.userFollow = false;
+      this.props.getAllFeatures();
+      this.props.getUserActivities();
+      // this.forceUpdate();
     }
   }
 
@@ -69,9 +78,22 @@ export default class FeatureCard extends Component {
   //   this.setState({ followActive: this.props.feature.userFollow });
   // }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.userFollow !== prevProps.userFollow) {
+      console.log("userFollow update");
+      this.setState({ userFollow: this.props.userFollow });
+    } else if (this.props.userVote !== prevProps.userFollow) {
+      console.log("userVote update");
+      this.setState({ userVote: this.props.userVote });
+    }
+  }
+
   // componentDidMount() {
-  //   this.checkForVote();
-  //   this.checkForFollow();
+  // this.checkForVote();
+  // this.checkForFollow();
+  // const feature = this.props.feature;
+  // console.log("card mount vote", this.state.userVote);
+  // console.log("card mount follow", this.state.userFollow);
   // }
 
   render() {

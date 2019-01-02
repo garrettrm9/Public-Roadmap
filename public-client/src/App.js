@@ -159,8 +159,8 @@ class App extends Component {
     })
       .then(response => {
         // this.getAllActivities();
-        this.getUserActivities();
         this.getAllFeatures();
+        this.getUserActivities();
       })
       .catch(err => console.log(`newActivity err: ${err}`));
   }
@@ -489,11 +489,9 @@ class App extends Component {
                       {...props}
                       getAllFeatures={this.getAllFeatures}
                       addFeature={this.addFeature}
-                      // getAllActivities={this.getAllActivities}
                       getUserActivities={this.getUserActivities}
                       newActivity={this.newActivity}
                       deleteActivity={this.deleteActivity}
-                      // seeUserFollows={this.seeUserFollows}
                       products={this.state.products}
                       unfilteredFeatureList={this.state.unfilteredFeatureList}
                       user={this.state.user}

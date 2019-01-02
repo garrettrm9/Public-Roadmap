@@ -41,6 +41,8 @@ export default class FilteredFeatureList extends Component {
         user={this.props.user}
         newActivity={this.props.newActivity}
         deleteActivity={this.props.deleteActivity}
+        getUserActivities={this.props.getUserActivities}
+        getAllFeatures={this.props.getAllFeatures}
       />
     );
   }

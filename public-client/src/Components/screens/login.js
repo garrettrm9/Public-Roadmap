@@ -43,7 +43,7 @@ export default class Login extends Component {
     return (
       <div>
         <h1 className="loginHeader">
-          Public <br /> Roadmap
+          Public<br />Roadmap
         </h1>
         <h2 className="loginSubheader">Mapping out the future</h2>
         <div className="loginDivider" />
