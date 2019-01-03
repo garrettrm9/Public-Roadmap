@@ -18,12 +18,12 @@ INSERT INTO products (name, company_name) VALUES
   ('Mobile Spotify app', 'Spotify');
 
 INSERT INTO features (name, purpose, date_last_updated, product_name, user_email) VALUES
-  ('Higher quality chocolate', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2018-10-10', 'Kit Kat', 'new'),
-  ('More Kisses per bag', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2018-10-13', 'Hershey Kiss', 'test'),
-  ('Itunes UI overhaul', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2018-10-29', 'Iphone', 'new'),
-  ('Open source software', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2018-10-30', 'Apple Watch', 'test'),
-  ('Improved AI song suggestion', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2018-10-01', 'Radio station', 'new'),
-  ('Less battery drain', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2018-10-09', 'Mobile Spotify app', 'test');
+  ('Higher quality chocolate', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.', '2018-10-10', 'Kit Kat', 'new'),
+  ('More Kisses per bag', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.', '2018-10-13', 'Hershey Kiss', 'test'),
+  ('Itunes UI overhaul', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.', '2018-10-29', 'Iphone', 'new'),
+  ('Open source software', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.', '2018-10-30', 'Apple Watch', 'test'),
+  ('Improved AI song suggestion', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.', '2018-10-01', 'Radio station', 'new'),
+  ('Less battery drain', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.', '2018-10-09', 'Mobile Spotify app', 'test');
 
 INSERT INTO activities (type, feature_id, user_email) VALUES
   ('vote', 1, 'new'),
@@ -53,13 +53,3 @@ INSERT INTO activities (type, feature_id, user_email) VALUES
   ('follow', 4, 'test'),
   ('follow', 5, 'test'),
   ('follow', 6, 'test');
-
-
--- INSERT INTO follows (feature_id, user_id) VALUES
---   (1, 1),
---   (2, 1),
---   (3, 1),
---   (4, 1),
---   (1, 2),
---   (5, 2),
---   (6, 2);
